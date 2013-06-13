@@ -17,10 +17,20 @@
 
 @implementation CKBasicAuthUrlUtilities
 
+#pragma mark - Initialization
+
 - (id)init
 {
     if(self = [super init]){
         self.schemeType = CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttps;
+    }
+    return self;
+}
+
+- (id)initWithDefaultSchemeType:(CKBasicAuthUrlUtilitiesDefaultSchemeType)schemeType
+{
+    if(self = [super init]){
+        self.schemeType = schemeType;
     }
     return self;
 }

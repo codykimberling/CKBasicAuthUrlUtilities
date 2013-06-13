@@ -6,9 +6,35 @@
 //  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "CKBasicAuthUrlUtilitiesTests.h"
+#import "OCMock.h"
 #import "CKBasicAuthUrlUtilities.h"
+#import "NSString+BasicAuthUtils.h"
+#import "NSURL+BasicAuthUtils.h"
+#import "CKTestHelpers.h"
+
+@interface CKBasicAuthUrlUtilitiesTests ()
+
+@property (nonatomic) CKBasicAuthUrlUtilities *utilitiesHttpScheme;
+@property (nonatomic) CKBasicAuthUrlUtilities *utilitiesHttpsScheme;
+@property (nonatomic) id mockUrl;
+@property (nonatomic) id mockString;
+
+@end
 
 @implementation CKBasicAuthUrlUtilitiesTests
+
+- (void)setUp
+{
+    [super setUp];
+    
+    self.mockUrl = [OCMockObject niceMockForClass:NSURL.class];
+    self.mockString = [OCMockObject niceMockForClass:NSString.class];
+    
+    self.utilitiesHttpScheme = CKBasicAuthUrlUtilities.new;
+    self.utilitiesHttpScheme.schemeType = CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttp;
+    
+    self.utilitiesHttpsScheme = CKBasicAuthUrlUtilities.new;
+}
 
 #pragma mark - CKBasicAuthUrlUtilitiesDefaultSchemeType tests
 
@@ -21,25 +47,113 @@
 - (void)testBasicAuthUrlUtilitiesDefaultSchemeHttpsOnInit
 {
     STAssertTrue(CKBasicAuthUrlUtilities.new.schemeType == CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttps, nil);
+    STAssertTrue(self.utilitiesHttpsScheme.schemeType == CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttps, nil);
+    STAssertTrue(self.utilitiesHttpScheme.schemeType == CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttp, nil);
+}
+
+- (void)testSchemeTranslation
+{    
+    STAssertEqualObjects(self.utilitiesHttpsScheme.scheme, @"https", nil);
+    STAssertEqualObjects(self.utilitiesHttpScheme.scheme, @"http", nil);
 }
 
 #pragma mark - NSURL encode tests
 
 - (void)testUrlWithEncodedOrNonEncodedString
 {
-//    - (NSURL *)urlWithEncodedOrNonEncodedString:(NSString *)encodedOrNonEncodedString;
-    STAssertTrue(CKBasicAuthUrlUtilities.new.schemeType == CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttps, nil);
+    NSString *encodedString = @"http://www.google.com/%3F1=abc";
+    
+    NSString *expectedUrl = [NSURL URLWithString:encodedString];
+    
+    [[[self.mockString expect] andReturn:encodedString] urlSafeString];
+    [[[self.mockUrl expect] andReturn:expectedUrl] URLWithString:encodedString];
+    
+    NSURL *actualUrl = [self.utilitiesHttpScheme urlWithEncodedOrNonEncodedString:self.mockString];
+
+    [self.mockString verify];
+    [self.mockUrl verify];
+    
+    STAssertEquals(actualUrl, expectedUrl, nil);
 }
 
-//
-//#pragma mark - NSURL Update User/Password
-//
-//- (NSURL *)urlWithUpdatedUsername:(NSString *)username forUrl:(NSURL *)url;
-//- (NSURL *)urlWithUpdatedPassword:(NSString *)password forUrl:(NSURL *)url;
-//- (NSURL *)urlWithUpdatedUsername:(NSString *)username andPassword:(NSString *)password forUrl:(NSURL *)url;
-//
-//#pragma mark - NSURL
-//
-//- (NSURL *)urlWithoutAuthenticationFromUrl:(NSURL *)url;
+#pragma mark - NSURL Update User/Password Tests
+
+- (void)testUrlWithUpdatedUsername
+{
+    [self verifyUrlWithUpdatedUsernameWithSchemeType:CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttp];
+    [self verifyUrlWithUpdatedUsernameWithSchemeType:CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttps];
+}
+
+- (void)testUrlWithUpdatedPassword
+{
+    [self verifyUrlWithUpdatedPasswordWithSchemeType:CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttp];
+    [self verifyUrlWithUpdatedPasswordWithSchemeType:CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttps];
+}
+
+- (void)testUrlWithUpdatedUsernameAndPassword
+{
+    [self verifyUrlWithUpdatedUsernameAndPasswordWithSchemeType:CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttp];
+    [self verifyUrlWithUpdatedUsernameAndPasswordWithSchemeType:CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttps];
+}
+
+- (void)verifyUrlWithUpdatedUsernameWithSchemeType:(CKBasicAuthUrlUtilitiesDefaultSchemeType)schemeType
+{
+    CKBasicAuthUrlUtilities *utils = (schemeType == CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttps) ? self.utilitiesHttpsScheme : self.utilitiesHttpScheme;
+    NSURL *expectedUrl = NSURL.new;
+    
+    [[[self.mockUrl expect] andReturn:expectedUrl] urlWithUpdatedUsername:self.mockString withScheme:utils.scheme];
+    
+    NSURL *actualUrl = [utils urlWithUpdatedUsername:self.mockString forUrl:self.mockUrl];
+    
+    [self.mockUrl verify];
+    
+    STAssertEquals(actualUrl, expectedUrl, nil);
+}
+
+- (void)verifyUrlWithUpdatedPasswordWithSchemeType:(CKBasicAuthUrlUtilitiesDefaultSchemeType)schemeType
+{
+    CKBasicAuthUrlUtilities *utils = (schemeType == CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttps) ? self.utilitiesHttpsScheme : self.utilitiesHttpScheme;
+    NSURL *expectedUrl = NSURL.new;
+    
+    [[[self.mockUrl expect] andReturn:expectedUrl] urlWithUpdatedPassword:self.mockString withScheme:utils.scheme];
+    
+    NSURL *actualUrl = [utils urlWithUpdatedPassword:self.mockString forUrl:self.mockUrl];
+    
+    [self.mockUrl verify];
+    
+    STAssertEquals(actualUrl, expectedUrl, nil);
+}
+
+- (void)verifyUrlWithUpdatedUsernameAndPasswordWithSchemeType:(CKBasicAuthUrlUtilitiesDefaultSchemeType)schemeType
+{
+    id mockUsernameString = self.mockString;
+    id mockPasswordString = [OCMockObject niceMockForClass:NSString.class];
+    
+    CKBasicAuthUrlUtilities *utils = (schemeType == CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttps) ? self.utilitiesHttpsScheme : self.utilitiesHttpScheme;
+    NSURL *expectedUrl = NSURL.new;
+    
+    [[[self.mockUrl expect] andReturn:expectedUrl] urlWithUpdatedUsername:mockUsernameString andPassword:mockPasswordString withScheme:utils.scheme];
+    
+    NSURL *actualUrl = [utils urlWithUpdatedUsername:mockUsernameString andPassword:mockPasswordString forUrl:self.mockUrl];
+    
+    [self.mockUrl verify];
+    
+    STAssertEquals(actualUrl, expectedUrl, nil);
+}
+
+#pragma mark - NSURL Strip Auth Tests
+
+- (void)testUrlWithoutAuthenticationFromUrl
+{
+    NSURL *expectedUrl = NSURL.new;
+    
+    [[[self.mockUrl expect] andReturn:expectedUrl] urlWithoutAuthentication];
+    
+    NSURL *actualUrl = [self.utilitiesHttpsScheme urlWithoutAuthenticationFromUrl:self.mockUrl];
+    
+    [self.mockUrl verify];
+    
+    STAssertEquals(actualUrl, expectedUrl, nil);
+}
 
 @end

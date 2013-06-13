@@ -16,6 +16,8 @@ typedef enum : NSInteger {
 
 @property (nonatomic) CKBasicAuthUrlUtilitiesDefaultSchemeType schemeType;  //default is HTTPS
 
+- (id)initWithDefaultSchemeType:(CKBasicAuthUrlUtilitiesDefaultSchemeType)schemeType;
+
 #pragma mark - NSURL encode string if needed
 
 - (NSURL *)urlWithEncodedOrNonEncodedString:(NSString *)encodedOrNonEncodedString;
