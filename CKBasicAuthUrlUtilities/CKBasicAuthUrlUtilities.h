@@ -14,22 +14,30 @@ typedef enum : NSInteger {
 
 @interface CKBasicAuthUrlUtilities : NSObject
 
-@property (nonatomic) CKBasicAuthUrlUtilitiesDefaultSchemeType schemeType;  //default is HTTPS
+// scheme type, default is HTTPS
+@property (nonatomic) CKBasicAuthUrlUtilitiesDefaultSchemeType schemeType;
 
 - (id)initWithDefaultSchemeType:(CKBasicAuthUrlUtilitiesDefaultSchemeType)schemeType;
 
 #pragma mark - NSURL encode string if needed
 
-- (NSURL *)urlWithEncodedOrNonEncodedString:(NSString *)encodedOrNonEncodedString;
+//  Creates a NSURL with a non-encoded string, percent escapting the non-encoded string with NSUTF8StringEncoding
+- (NSURL *)urlWithUtf8EncodingForString:(NSString *)nonEncodedString;
 
 #pragma mark - NSURL Update User/Password
 
+//  Returns a NSURL with an updated username
 - (NSURL *)urlWithUpdatedUsername:(NSString *)username forUrl:(NSURL *)url;
+
+//  Returns a NSURL with an updated password
 - (NSURL *)urlWithUpdatedPassword:(NSString *)password forUrl:(NSURL *)url;
+
+//  Returns a NSURL with an updated username and password
 - (NSURL *)urlWithUpdatedUsername:(NSString *)username andPassword:(NSString *)password forUrl:(NSURL *)url;
 
 #pragma mark - NSURL 
 
+//  Returns a NSURL with the authentication components stripped out
 - (NSURL *)urlWithoutAuthenticationFromUrl:(NSURL *)url;
 
 @end

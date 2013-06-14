@@ -12,8 +12,8 @@ Then, um, use it:
 
 Let's see what we can do:
 
-	//  Creates a NSURL, just like [NSURL urlWithString:] but encodes the NSString if needed
-	- (NSURL *)urlWithEncodedOrNonEncodedString:(NSString *)encodedOrNonEncodedString;
+	//  Creates a NSURL with a non-encoded string, percent escapting the non-encoded string with NSUTF8StringEncoding
+	- (NSURL *)urlWithUtf8EncodingForString:(NSString *)nonEncodedString;
 
 	//  Returns a NSURL with an updated username
 	- (NSURL *)urlWithUpdatedUsername:(NSString *)username forUrl:(NSURL *)url;
@@ -24,9 +24,9 @@ Let's see what we can do:
 	//  Returns a NSURL with an updated username and password
 	- (NSURL *)urlWithUpdatedUsername:(NSString *)username andPassword:(NSString *)password forUrl:(NSURL *)url;
 
+	#pragma mark - NSURL 
+
 	//  Returns a NSURL with the authentication components stripped out
-	//  so this: https://user_one:fluffyKitty17@www.someurl.com
-	//  becomes this: https://www.someurl.com
 	- (NSURL *)urlWithoutAuthenticationFromUrl:(NSURL *)url;
 
 If the [URL scheme component](http://en.wikipedia.org/wiki/URI_scheme#Official_IANA-registered_schemes) is missing in your NSURL,  CKBasicAuthUrlUtilities  automatically uses https by default, but can use http if desired.  It can be set via a property after initialization or on creation:

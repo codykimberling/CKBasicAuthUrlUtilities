@@ -59,20 +59,23 @@
 
 #pragma mark - NSURL encode tests
 
-- (void)testUrlWithEncodedOrNonEncodedString
+- (void)testUrlWithUtf8EncodingForString
 {
-    NSString *encodedString = @"http://www.google.com/%3F1=abc";
+    NSString *nonEncodedString = @"http://www.google.com/?q=whoami?";
+    NSString *encodedString = @"http://www.google.com/?q=whoami%3F";
+
+    NSString *expectedUrl = [NSURL URLWithString:nonEncodedString];
+
+//    nonEncodedString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
     
-    NSString *expectedUrl = [NSURL URLWithString:encodedString];
-    
-    [[[self.mockString expect] andReturn:encodedString] urlSafeString];
+    [[[self.mockString expect] andReturn:encodedString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [[[self.mockUrl expect] andReturn:expectedUrl] URLWithString:encodedString];
-    
-    NSURL *actualUrl = [self.utilitiesHttpScheme urlWithEncodedOrNonEncodedString:self.mockString];
+
+    NSURL *actualUrl = [self.utilitiesHttpScheme urlWithUtf8EncodingForString:self.mockString];
 
     [self.mockString verify];
     [self.mockUrl verify];
-    
+
     STAssertEquals(actualUrl, expectedUrl, nil);
 }
 

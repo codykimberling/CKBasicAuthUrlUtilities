@@ -37,9 +37,10 @@
 
 #pragma mark - NSURL encode string if needed
 
-- (NSURL *)urlWithEncodedOrNonEncodedString:(NSString *)encodedOrNonEncodedString
+- (NSURL *)urlWithUtf8EncodingForString:(NSString *)nonEncodedString
 {
-    return [NSURL URLWithString:encodedOrNonEncodedString.urlSafeString];
+    NSString *encodedString = [nonEncodedString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    return [NSURL URLWithString:encodedString];
 }
 
 #pragma mark - NSURL Update User/Password
