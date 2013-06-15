@@ -15,16 +15,14 @@ Let's see what we can do:
 	//  Creates a NSURL with a non-encoded string, percent escapting the non-encoded string with NSUTF8StringEncoding
 	- (NSURL *)urlWithUtf8EncodingForString:(NSString *)nonEncodedString;
 
-	//  Returns a NSURL with an updated username
+	//  Returns a NSURL with an updated username (username encoded if needed)
 	- (NSURL *)urlWithUpdatedUsername:(NSString *)username forUrl:(NSURL *)url;
 
-	//  Returns a NSURL with an updated password
+	//  Returns a NSURL with an updated password (password encoded if needed)
 	- (NSURL *)urlWithUpdatedPassword:(NSString *)password forUrl:(NSURL *)url;
 
-	//  Returns a NSURL with an updated username and password
+	//  Returns a NSURL with an updated username and password (username and password will be encoded if needed)
 	- (NSURL *)urlWithUpdatedUsername:(NSString *)username andPassword:(NSString *)password forUrl:(NSURL *)url;
-
-	#pragma mark - NSURL 
 
 	//  Returns a NSURL with the authentication components stripped out
 	- (NSURL *)urlWithoutAuthenticationFromUrl:(NSURL *)url;
