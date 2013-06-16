@@ -40,4 +40,12 @@ typedef enum : NSInteger {
 //  Returns a NSURL with the authentication components stripped out
 - (NSURL *)urlWithoutAuthenticationFromUrl:(NSURL *)url;
 
+#pragma mark - BOOL methods
+
+//Returns true if URL contains scheme
+- (BOOL)urlHasScheme:(NSURL *)url;
+
+//Returns true if URL contains components for BASIC authentication
+- (BOOL)urlHasAuthentication:(NSURL *)url;
+
 @end

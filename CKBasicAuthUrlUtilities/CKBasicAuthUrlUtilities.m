@@ -67,6 +67,18 @@
     return url.urlWithoutAuthentication;
 }
 
+#pragma mark - BOOL
+
+- (BOOL)urlHasScheme:(NSURL *)url
+{
+    return url.hasScheme;
+}
+
+- (BOOL)urlHasAuthentication:(NSURL *)url
+{
+    return url.hasAuthentication;
+}
+
 - (NSString *)scheme
 {
     return (self.schemeType == CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttps) ? @"https" : @"http";

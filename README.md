@@ -27,6 +27,12 @@ Let's see what we can do:
 	//  Returns a NSURL with the authentication components stripped out
 	- (NSURL *)urlWithoutAuthenticationFromUrl:(NSURL *)url;
 
+	//Returns true if URL contains scheme
+	- (BOOL)urlHasScheme:(NSURL *)url;
+
+	//Returns true if URL contains components for BASIC authentication
+	- (BOOL)urlHasAuthentication:(NSURL *)url;
+
 If the [URL scheme component](http://en.wikipedia.org/wiki/URI_scheme#Official_IANA-registered_schemes) is missing in your NSURL,  CKBasicAuthUrlUtilities  automatically uses https by default, but can use http if desired.  It can be set via a property after initialization or on creation:
 
 	urlUtils.schemeType = (CKBasicAuthUrlUtilitiesDefaultSchemeType);

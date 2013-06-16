@@ -159,4 +159,59 @@
     STAssertEquals(actualUrl, expectedUrl, nil);
 }
 
+#pragma mark BOOL methods
+
+- (void)testUrlHasSchemeReturnsTrue
+{
+    BOOL returnValue = YES;
+    
+    [[[self.mockUrl expect] andReturnValue:OCMOCK_VALUE(returnValue)] hasScheme];
+    
+    BOOL result = [self.utilitiesHttpScheme urlHasScheme:self.mockUrl];
+    
+    [self.mockUrl verify];
+    
+    STAssertTrue(result, nil);
+}
+
+- (void)testUrlHasSchemeReturnsFalse
+{
+    BOOL returnValue = NO;
+    
+    [[[self.mockUrl expect] andReturnValue:OCMOCK_VALUE(returnValue)] hasScheme];
+    
+    BOOL result = [self.utilitiesHttpScheme urlHasScheme:self.mockUrl];
+    
+    [self.mockUrl verify];
+    
+    STAssertFalse(result, nil);
+}
+
+- (void)testUrlHasAuthenticationReturnsTrue
+{
+    BOOL returnValue = YES;
+    
+    [[[self.mockUrl expect] andReturnValue:OCMOCK_VALUE(returnValue)] hasAuthentication];
+    
+    BOOL result = [self.utilitiesHttpScheme urlHasAuthentication:self.mockUrl];
+    
+    [self.mockUrl verify];
+    
+    STAssertTrue(result, nil);
+}
+
+- (void)testUrlHasAuthenticationReturnsFalse
+{
+    BOOL returnValue = NO;
+    
+    [[[self.mockUrl expect] andReturnValue:OCMOCK_VALUE(returnValue)] hasAuthentication];
+    
+    BOOL result = [self.utilitiesHttpScheme urlHasAuthentication:self.mockUrl];
+    
+    [self.mockUrl verify];
+    
+    STAssertFalse(result, nil);
+}
+
+
 @end
