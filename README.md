@@ -33,7 +33,7 @@ If the [URL scheme component](http://en.wikipedia.org/wiki/URI_scheme#Official_I
 
 or 
 
-	urlUtils = [[CKBasicAuthUrlUtilities alloc] initWithDefaultSchemeType:(CKBasicAuthUrlUtilitiesDefaultSchemeType)];
+	CKBasicAuthUrlUtilities urlUtils = [[CKBasicAuthUrlUtilities alloc] initWithDefaultSchemeType:(CKBasicAuthUrlUtilitiesDefaultSchemeType)];
 
 
 where `CKBasicAuthUrlUtilitiesDefaultSchemeType` is either:
