@@ -18,4 +18,7 @@
 
 - (NSURL *)urlWithoutAuthentication;
 
+- (NSString *)basicAuthenticationStringWithoutEncoding;
+- (NSString *)basicAuthenticationStringWithEncoding;
+
 @end

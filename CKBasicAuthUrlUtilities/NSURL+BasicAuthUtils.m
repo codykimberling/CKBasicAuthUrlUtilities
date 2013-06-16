@@ -98,4 +98,25 @@
     return [self.absoluteString rangeOfString:string].location != NSNotFound;
 }
 
+- (NSString *)basicAuthenticationStringWithoutEncoding
+{
+    return [self basicAuthenticationStringShouldEncodeResult:NO];
+}
+
+- (NSString *)basicAuthenticationStringWithEncoding
+{
+    return [self basicAuthenticationStringShouldEncodeResult:YES];
+}
+
+- (NSString *)basicAuthenticationStringShouldEncodeResult:(BOOL)shouldEncode
+{
+    if(self.user.isNotEmpty || self.password.isNotEmpty){
+        if(shouldEncode){
+            return [NSString stringWithFormat:@"%@:%@", self.user.urlSafeString, self.password.urlSafeString];
+        }
+        return [NSString stringWithFormat:@"%@:%@", self.user, self.password];
+    }
+    return nil;
+}
+
 @end

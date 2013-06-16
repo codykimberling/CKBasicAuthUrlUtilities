@@ -33,5 +33,6 @@
 @interface CKBasicAuthUrlUtilities (Test)
 
 - (NSString *)scheme;
+- (NSString *)basicAuthenticationStringShouldEncodeResult:(BOOL)shouldEncode;
 
 @end

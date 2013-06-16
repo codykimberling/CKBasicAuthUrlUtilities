@@ -186,6 +186,78 @@ static NSString *kScheme = @"https";
     STAssertEqualObjects(actualUrl, expectedUrl, nil);
 }
 
+- (void)testBasicAuthenticationStringWithNoUserOrPassword
+{
+    NSURL *inputUrl = [NSURL URLWithString:@"http://www.yahoo.com"];
+    
+    NSString *authStringWithoutEncoding = [inputUrl basicAuthenticationStringWithoutEncoding];
+    NSString *authStringWithEncoding = [inputUrl basicAuthenticationStringWithEncoding];
+    
+    STAssertTrue((authStringWithoutEncoding == nil), nil);
+    STAssertTrue((authStringWithEncoding == nil), nil);
+}
+
+- (void)testBasicAuthenticationStringWithEmptyUserAndPassword
+{
+    NSURL *inputUrl = [NSURL URLWithString:@"http://:@www.yahoo.com"];
+    
+    NSString *authStringWithoutEncoding = [inputUrl basicAuthenticationStringWithoutEncoding];
+    NSString *authStringWithEncoding = [inputUrl basicAuthenticationStringWithEncoding];
+    
+    STAssertTrue((authStringWithoutEncoding == nil), nil);
+    STAssertTrue((authStringWithEncoding == nil), nil);
+}
+
+- (void)testBasicAuthenticationStringWithEmptyUserAndPopulatedPassword
+{
+    NSString *expectedString = @":pass";
+    NSURL *inputUrl = [NSURL URLWithString:@"http://:pass@www.yahoo.com"];
+    
+    NSString *authStringWithoutEncoding = [inputUrl basicAuthenticationStringWithoutEncoding];
+    NSString *authStringWithEncoding = [inputUrl basicAuthenticationStringWithEncoding];
+
+    STAssertEqualObjects(authStringWithoutEncoding, expectedString, nil);
+    STAssertEqualObjects(authStringWithEncoding, expectedString, nil);
+}
+
+- (void)testBasicAuthenticationStringPopulatedUserAndEmptyPassword
+{
+    NSString *expectedString = @"user:";
+    NSURL *inputUrl = [NSURL URLWithString:@"http://user:@www.yahoo.com"];
+    
+    NSString *authStringWithoutEncoding = [inputUrl basicAuthenticationStringWithoutEncoding];
+    NSString *authStringWithEncoding = [inputUrl basicAuthenticationStringWithEncoding];
+    
+    STAssertEqualObjects(authStringWithoutEncoding, expectedString, nil);
+    STAssertEqualObjects(authStringWithEncoding, expectedString, nil);
+}
+
+- (void)testBasicAuthenticationStringPopulatedUsernameAndPassword
+{
+    NSString *expectedString = @"user:pass";
+    NSURL *inputUrl = [NSURL URLWithString:@"http://user:pass@www.yahoo.com"];
+    
+    NSString *authStringWithoutEncoding = [inputUrl basicAuthenticationStringWithoutEncoding];
+    NSString *authStringWithEncoding = [inputUrl basicAuthenticationStringWithEncoding];
+    
+    STAssertEqualObjects(authStringWithoutEncoding, expectedString, nil);
+    STAssertEqualObjects(authStringWithEncoding, expectedString, nil);
+}
+
+- (void)testBasicAuthenticationStringNonEncodedUsernameAndPassword
+{
+    NSString *expectedNonEncodedString = @"user@hotmail.com:pass";
+    NSString *expectedEncodedString = @"user%40hotmail.com:pass";
+    
+    NSURL *inputUrl = [[NSURL URLWithString:@"http://www.yahoo.com"] urlWithUpdatedUsername:@"user@hotmail.com" andPassword:@"pass" withScheme:@"http:"];
+    
+    NSString *authStringWithoutEncoding = [inputUrl basicAuthenticationStringWithoutEncoding];
+    NSString *authStringWithEncoding = [inputUrl basicAuthenticationStringWithEncoding];
+    
+    STAssertEqualObjects(authStringWithoutEncoding, expectedNonEncodedString, nil);
+    STAssertEqualObjects(authStringWithEncoding, expectedEncodedString, nil);
+}
+
 #pragma mark - Test helpers
 
 - (NSURL *)urlWithOldUserAndOldPassword

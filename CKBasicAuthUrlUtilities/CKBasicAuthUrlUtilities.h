@@ -48,4 +48,29 @@ typedef enum : NSInteger {
 //Returns true if URL contains components for BASIC authentication
 - (BOOL)urlHasAuthentication:(NSURL *)url;
 
+#pragma mark - NSString methods
+
+//Returns a basic authentication string (encoded) from a given url, returns nil if url does not contain an auth string
+- (NSString *)basicAuthenticationStringWithEncodingForUrl:(NSURL *)url;
+
+//Returns a basic authentication string (non-encoded) from a given url, returns nil if url does not contain an auth string
+- (NSString *)basicAuthenticationStringWithoutEncodingForUrl:(NSURL *)url;
+
+#pragma mark - NSURLRequest methods
+
+//Preempt Authentication callbacks by initializing a NSMutableURLRequest with the provided url.
+//If given URL has authentication (username or password), then add basic authentication to url request preemptively
+//This can be used when the server returns a 401 without a 403 response and the standard NSURLConnectionDelegate willSendRequestForAuthenticationChallenge
+//is not automatically called 
+- (NSMutableURLRequest *)urlRequestWithPreemptiveBasicAuthenticationWithUrl:(NSURL *)url;
+
+#pragma mark - NSData-Base64 methods
+//Mehtods from NSData-Base64 (https://github.com/l4u/NSData-Base64/blob/master/NSData%2BBase64.h)
+
+//Retuns NSData fromm a Base64 encoded string
+- (NSData *)dataFromBase64String:(NSString *)aString;
+
+//Returns a NSString Base64 encoded
+- (NSString *)base64EncodedStringForData:(NSData *)data;
+
 @end

@@ -11,6 +11,7 @@
 #import "NSString+BasicAuthUtils.h"
 #import "NSURL+BasicAuthUtils.h"
 #import "CKTestHelpers.h"
+#import "NSData+Base64.h"
 
 @interface CKBasicAuthUrlUtilitiesTests ()
 
@@ -18,6 +19,7 @@
 @property (nonatomic) CKBasicAuthUrlUtilities *utilitiesHttpsScheme;
 @property (nonatomic) id mockUrl;
 @property (nonatomic) id mockString;
+@property (nonatomic) id mockData;
 
 @end
 
@@ -29,6 +31,7 @@
     
     self.mockUrl = [OCMockObject niceMockForClass:NSURL.class];
     self.mockString = [OCMockObject niceMockForClass:NSString.class];
+    self.mockData = [OCMockObject niceMockForClass:NSData.class];
     
     self.utilitiesHttpScheme = CKBasicAuthUrlUtilities.new;
     self.utilitiesHttpScheme.schemeType = CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttp;
@@ -213,5 +216,101 @@
     STAssertFalse(result, nil);
 }
 
+- (void)testAuthenticationStringWithEncodingForUrl
+{
+    NSString *expected = @"user:pass";
+    
+    [[[self.mockUrl expect] andReturn:expected] basicAuthenticationStringWithEncoding];
+    
+    NSString *actual = [self.utilitiesHttpScheme basicAuthenticationStringWithEncodingForUrl:self.mockUrl];
+    
+    [self.mockUrl verify];
+    
+    STAssertEqualObjects(actual, expected, nil);
+}
+
+- (void)testAuthenticationStringWithoutEncodingForUrl
+{
+    NSString *expected = @"user:pass";
+    
+    [[[self.mockUrl expect] andReturn:expected] basicAuthenticationStringWithoutEncoding];
+    
+    NSString *actual = [self.utilitiesHttpScheme basicAuthenticationStringWithoutEncodingForUrl:self.mockUrl];
+    
+    [self.mockUrl verify];
+    
+    STAssertEqualObjects(actual, expected, nil);
+}
+
+#pragma mark - NSURLRequest
+
+- (void)testUrlRequestReturnsInitializedRequesstWithoutAuthHeaderIfUrlDoesNotProvideUsernameOrPassword
+{
+    NSURL *expected = [NSURL URLWithString:@"http://www.yahoo.com"];
+    
+    NSMutableURLRequest *actual = [self.utilitiesHttpScheme urlRequestWithPreemptiveBasicAuthenticationWithUrl:expected];
+    
+    id value = [actual.allHTTPHeaderFields objectForKey:@"Authorization"];
+    
+    STAssertTrue((value == nil), nil);
+    STAssertEqualObjects(actual.URL, expected, nil);
+}
+
+- (void)testUrlRequestReturnsInitializedRequesstWithoutAuthHeaderIfUrlDoesNotProvideUsernameOrPassword_
+{
+    id partialMockUtils = [OCMockObject partialMockForObject:self.utilitiesHttpScheme];
+    
+    NSURL *url = [NSURL URLWithString:@"http://user:password@www.yahoo.com"];
+    NSString *encodedString = @"TESTING";
+    NSString *expectedString = [NSString stringWithFormat:@"Basic %@", encodedString];
+    
+    [[[partialMockUtils expect] andReturn:self.mockString] basicAuthenticationStringWithEncodingForUrl:url];
+    
+    [[[self.mockString expect] andReturn:self.mockData] dataUsingEncoding:NSASCIIStringEncoding];
+    
+    [[[partialMockUtils expect] andReturn:encodedString] base64EncodedStringForData:self.mockData];
+    
+    
+    NSMutableURLRequest *actual = [self.utilitiesHttpScheme urlRequestWithPreemptiveBasicAuthenticationWithUrl:url];
+    
+    id value = [actual.allHTTPHeaderFields objectForKey:@"Authorization"];
+    
+    [partialMockUtils verify];
+    [self.mockString verify];
+    
+    STAssertEqualObjects(value, expectedString, nil);
+    STAssertEqualObjects(actual.URL, url, nil);
+    
+    [partialMockUtils stopMocking];
+}
+
+#pragma mark - NSData-Base64 methods
+
+- (void)testDataFromBase64String
+{
+    NSString *inputString = @"TEST";
+    NSData *expected = NSData.new;
+    
+    [[[self.mockData expect] andReturn:expected] dataFromBase64String:inputString];
+    
+    NSData *actual = [self.utilitiesHttpScheme dataFromBase64String:inputString];
+    
+    [self.mockData verify];
+    
+    STAssertEqualObjects(actual, expected, nil);
+}
+
+- (void)testBase64EncodedStringForData
+{
+    NSString *expected = @"TEST";
+    
+    [[[self.mockData expect] andReturn:expected] base64EncodedString];
+    
+    NSString *actual = [self.utilitiesHttpScheme base64EncodedStringForData:self.mockData];
+    
+    [self.mockData verify];
+    
+    STAssertEqualObjects(actual, expected, nil);
+}
 
 @end
