@@ -49,7 +49,7 @@ Return a basic authentication string (non-encoded) from a given url, returns nil
 	- (NSString *)basicAuthenticationStringWithoutEncodingForUrl:(NSURL *)url;
 
 Preempt Authentication callbacks by initializing a NSMutableURLRequest with the provided url.
-If given URL has authentication (username or password), then add basic authentication to url request preemptively
+If given URL has authentication, then add basic authentication to url request preemptively.
 This can be used when the server returns a 401 without a 403 response and the standard NSURLConnectionDelegate willSendRequestForAuthenticationChallenge is not automatically called 
 
 	- (NSMutableURLRequest *)urlRequestWithPreemptiveBasicAuthenticationWithUrl:(NSURL *)url;
