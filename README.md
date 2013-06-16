@@ -4,7 +4,7 @@
 
 Install via Cocoapods, add a line, like the one below, in your Podfile:
 
-`pod 'CKBasicAuthUrlUtilities',	'~> 0.0.5'`
+`pod 'CKBasicAuthUrlUtilities',	'~> 0.0.6'`
 
 Then, um, use it:
 
