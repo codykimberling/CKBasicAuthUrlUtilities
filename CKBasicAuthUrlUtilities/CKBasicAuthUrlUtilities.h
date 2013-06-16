@@ -65,7 +65,7 @@ typedef enum : NSInteger {
 - (NSMutableURLRequest *)urlRequestWithPreemptiveBasicAuthenticationWithUrl:(NSURL *)url;
 
 #pragma mark - NSData-Base64 methods
-//Mehtods from NSData-Base64 (https://github.com/l4u/NSData-Base64/blob/master/NSData%2BBase64.h)
+//Methods from NSData-Base64 (https://github.com/l4u/NSData-Base64/blob/master/NSData%2BBase64.h)
 
 //Retuns NSData fromm a Base64 encoded string
 - (NSData *)dataFromBase64String:(NSString *)aString;
