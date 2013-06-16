@@ -4,7 +4,7 @@
 
 Install via Cocoapods, add a line, like the one below, in your Podfile:
 
-`pod 'CKBasicAuthUrlUtilities',	'~> 0.0.1'`
+`pod 'CKBasicAuthUrlUtilities',	'~> 0.0.5'`
 
 Then, um, use it:
 
@@ -12,26 +12,59 @@ Then, um, use it:
 
 Let's see what we can do:
 
-	//  Creates a NSURL with a non-encoded string, percent escapting the non-encoded string with NSUTF8StringEncoding
+Create a NSURL with a non-encoded string, percent escapting the non-encoded string with NSUTF8StringEncoding:
+
 	- (NSURL *)urlWithUtf8EncodingForString:(NSString *)nonEncodedString;
 
-	//  Returns a NSURL with an updated username (username encoded if needed)
+NSURL with an updated username (username encoded if needed):
+
 	- (NSURL *)urlWithUpdatedUsername:(NSString *)username forUrl:(NSURL *)url;
 
-	//  Returns a NSURL with an updated password (password encoded if needed)
+NSURL with an updated password (password encoded if needed):
+
 	- (NSURL *)urlWithUpdatedPassword:(NSString *)password forUrl:(NSURL *)url;
 
-	//  Returns a NSURL with an updated username and password (username and password will be encoded if needed)
+NSURL with an updated username and password (username and password will be encoded if needed):
+
 	- (NSURL *)urlWithUpdatedUsername:(NSString *)username andPassword:(NSString *)password forUrl:(NSURL *)url;
 
-	//  Returns a NSURL with the authentication components stripped out
+NSURL with the authentication components stripped out:
+
 	- (NSURL *)urlWithoutAuthenticationFromUrl:(NSURL *)url;
 
-	//Returns true if URL contains scheme
+Return YES if URL contains scheme:
+
 	- (BOOL)urlHasScheme:(NSURL *)url;
 
-	//Returns true if URL contains components for BASIC authentication
+Return YES if URL contains components for BASIC authentication:
+
 	- (BOOL)urlHasAuthentication:(NSURL *)url;
+
+Return a basic authentication string (encoded) from a given url, returns nil if url does not contain an auth string:
+
+	- (NSString *)basicAuthenticationStringWithEncodingForUrl:(NSURL *)url;
+
+Return a basic authentication string (non-encoded) from a given url, returns nil if url does not contain an auth string:
+
+	- (NSString *)basicAuthenticationStringWithoutEncodingForUrl:(NSURL *)url;
+
+Preempt Authentication callbacks by initializing a NSMutableURLRequest with the provided url.
+If given URL has authentication (username or password), then add basic authentication to url request preemptively
+This can be used when the server returns a 401 without a 403 response and the standard NSURLConnectionDelegate willSendRequestForAuthenticationChallenge is not automatically called 
+
+	- (NSMutableURLRequest *)urlRequestWithPreemptiveBasicAuthenticationWithUrl:(NSURL *)url;
+
+Methods below from [NSData-Base64](https://github.com/l4u/NSData-Base64/blob/master/NSData%2BBase64.h)
+
+Retun NSData fromm a Base64 encoded string:
+
+	- (NSData *)dataFromBase64String:(NSString *)aString;
+
+Return a NSString Base64 encoded:
+
+	- (NSString *)base64EncodedStringForData:(NSData *)data;
+
+----
 
 If the [URL scheme component](http://en.wikipedia.org/wiki/URI_scheme#Official_IANA-registered_schemes) is missing in your NSURL,  CKBasicAuthUrlUtilities  automatically uses https by default, but can use http if desired.  It can be set via a property after initialization or on creation:
 
