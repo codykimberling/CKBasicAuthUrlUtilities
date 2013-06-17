@@ -22,17 +22,21 @@ typedef enum : NSInteger {
 #pragma mark - NSURL encode string if needed
 
 //  Creates a NSURL with a non-encoded string, percent escapting the non-encoded string with NSUTF8StringEncoding
+//  If URL does not contain a scheme, the default scheme is used
 - (NSURL *)urlWithUtf8EncodingForString:(NSString *)nonEncodedString;
 
 #pragma mark - NSURL Update User/Password
 
 //  Returns a NSURL with an updated username (username encoded if needed)
+//  If URL does not contain a scheme, the default scheme is used
 - (NSURL *)urlWithUpdatedUsername:(NSString *)username forUrl:(NSURL *)url;
 
 //  Returns a NSURL with an updated password (password encoded if needed)
+//  If URL does not contain a scheme, the default scheme is used
 - (NSURL *)urlWithUpdatedPassword:(NSString *)password forUrl:(NSURL *)url;
 
 //  Returns a NSURL with an updated username and password (username and password will be encoded if needed)
+//  If URL does not contain a scheme, the default scheme is used
 - (NSURL *)urlWithUpdatedUsername:(NSString *)username andPassword:(NSString *)password forUrl:(NSURL *)url;
 
 #pragma mark - NSURL 
@@ -42,35 +46,35 @@ typedef enum : NSInteger {
 
 #pragma mark - BOOL methods
 
-//Returns true if URL contains scheme
+//  Returns true if URL contains scheme
 - (BOOL)urlHasScheme:(NSURL *)url;
 
-//Returns true if URL contains components for BASIC authentication
+//  Returns true if URL contains components for BASIC authentication
 - (BOOL)urlHasAuthentication:(NSURL *)url;
 
 #pragma mark - NSString methods
 
-//Returns a basic authentication string (encoded) from a given url, returns nil if url does not contain an auth string
+//  Returns a basic authentication string (encoded) from a given url, returns nil if url does not contain an auth string
 - (NSString *)basicAuthenticationStringWithEncodingForUrl:(NSURL *)url;
 
-//Returns a basic authentication string (non-encoded) from a given url, returns nil if url does not contain an auth string
+//  Returns a basic authentication string (non-encoded) from a given url, returns nil if url does not contain an auth string
 - (NSString *)basicAuthenticationStringWithoutEncodingForUrl:(NSURL *)url;
 
 #pragma mark - NSURLRequest methods
 
-//Preempt Authentication callbacks by initializing a NSMutableURLRequest with the provided url.
-//If given URL has authentication, then add basic authentication to url request preemptively.
-//This can be used when the server returns a 401 without a 403 response and the standard NSURLConnectionDelegate
-//willSendRequestForAuthenticationChallenge is not automatically called
+//  Preempt Authentication callbacks by initializing a NSMutableURLRequest with the provided url.
+//  If given URL has authentication, then add basic authentication to url request preemptively.
+//  This can be used when the server returns a 401 without a 403 response and the standard NSURLConnectionDelegate
+//  willSendRequestForAuthenticationChallenge is not automatically called
 - (NSMutableURLRequest *)urlRequestWithPreemptiveBasicAuthenticationWithUrl:(NSURL *)url;
 
 #pragma mark - NSData-Base64 methods
-//Methods from NSData-Base64 (https://github.com/l4u/NSData-Base64/blob/master/NSData%2BBase64.h)
+//  Methods from NSData-Base64 (https://github.com/l4u/NSData-Base64/blob/master/NSData%2BBase64.h)
 
-//Retuns NSData fromm a Base64 encoded string
+//  Retuns NSData fromm a Base64 encoded string
 - (NSData *)dataFromBase64String:(NSString *)aString;
 
-//Returns a NSString Base64 encoded
+//  Returns a NSString Base64 encoded
 - (NSString *)base64EncodedStringForData:(NSData *)data;
 
 @end

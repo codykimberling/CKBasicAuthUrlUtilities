@@ -41,7 +41,10 @@
 - (NSURL *)urlWithUtf8EncodingForString:(NSString *)nonEncodedString
 {
     NSString *encodedString = [nonEncodedString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    return [NSURL URLWithString:encodedString];
+    
+    NSURL *url = [NSURL URLWithString:encodedString];
+    
+    return [url urlWithDefaultSchemePrependedUsingScheme:self.scheme];
 }
 
 #pragma mark - NSURL Update User/Password
@@ -65,7 +68,7 @@
 
 - (NSURL *)urlWithoutAuthenticationFromUrl:(NSURL *)url
 {
-    return url.urlWithoutAuthentication;
+    return [url.urlWithoutAuthentication urlWithDefaultSchemePrependedUsingScheme:self.scheme];
 }
 
 #pragma mark - BOOL

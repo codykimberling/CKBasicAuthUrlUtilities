@@ -68,8 +68,6 @@
     NSString *encodedString = @"http://www.google.com/?q=whoami%3F";
 
     NSString *expectedUrl = [NSURL URLWithString:nonEncodedString];
-
-//    nonEncodedString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
     
     [[[self.mockString expect] andReturn:encodedString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [[[self.mockUrl expect] andReturn:expectedUrl] URLWithString:encodedString];
@@ -81,6 +79,21 @@
 
     STAssertEquals(actualUrl, expectedUrl, nil);
 }
+
+- (void)testUrlWithUtf8EncodingForStringWithoutScheme
+{
+    NSString *urlWithoutScheme = @"www.google.com";
+    
+    NSURL *expectedUrlForHttpScheme = [NSURL URLWithString:@"http://www.google.com"];
+    NSURL *expectedUrlForHttpsScheme = [NSURL URLWithString:@"https://www.google.com"];
+    
+    NSURL *actualUrlForHttpScheme = [self.utilitiesHttpScheme urlWithUtf8EncodingForString:urlWithoutScheme];
+    NSURL *actualUrlForHttpsScheme = [self.utilitiesHttpsScheme urlWithUtf8EncodingForString:urlWithoutScheme];
+    
+    STAssertEqualObjects(actualUrlForHttpScheme, expectedUrlForHttpScheme, nil);
+    STAssertEqualObjects(actualUrlForHttpsScheme, expectedUrlForHttpsScheme, nil);
+}
+
 
 #pragma mark - NSURL Update User/Password Tests
 

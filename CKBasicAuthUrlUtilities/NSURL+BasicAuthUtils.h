@@ -12,6 +12,8 @@
 - (BOOL)hasScheme;
 - (BOOL)hasAuthentication;
 
+- (NSURL *)urlWithDefaultSchemePrependedUsingScheme:(NSString *)scheme;
+
 - (NSURL *)urlWithUpdatedUsername:(NSString *)username withScheme:(NSString *)scheme;
 - (NSURL *)urlWithUpdatedPassword:(NSString *)password withScheme:(NSString *)scheme;
 - (NSURL *)urlWithUpdatedUsername:(NSString *)username andPassword:(NSString *)password withScheme:(NSString *)scheme;
