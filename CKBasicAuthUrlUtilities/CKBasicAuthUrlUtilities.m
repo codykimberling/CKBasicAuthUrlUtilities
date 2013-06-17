@@ -90,6 +90,22 @@
 
 #pragma mark - NSString methods
 
+- (NSString *)absoluteStringWithoutAuthenticationForUrl:(NSURL *)url
+{
+    return url.urlWithoutAuthentication.absoluteString;
+}
+
+- (NSString *)absoluteStringObfuscatedPassword:(NSURL *)url
+{
+    if(!url.hasAuthentication){
+        return url.absoluteString;
+    }
+    
+    NSString *passwordString = [NSString stringWithFormat:@":%@@", url.password];
+    
+    return [url.absoluteString stringByReplacingOccurrencesOfString:passwordString withString:@":****@"];
+}
+
 - (NSString *)basicAuthenticationStringWithEncodingForUrl:(NSURL *)url
 {
     return url.basicAuthenticationStringWithEncoding;

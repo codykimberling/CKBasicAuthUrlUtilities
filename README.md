@@ -40,6 +40,15 @@ Return YES if URL contains components for BASIC authentication:
 
 	- (BOOL)urlHasAuthentication:(NSURL *)url;
 
+
+Return an absolute string represntation of a given url without the authentication components:
+
+	- (NSString *)absoluteStringWithoutAuthenticationForUrl:(NSURL *)url;
+
+Return an absolute string represntation of a given url with the password obfuscated
+
+	- (NSString *)absoluteStringObfuscatedPassword:(NSURL *)url;
+
 Return a basic authentication string (encoded) from a given url, returns nil if url does not contain an auth string:
 
 	- (NSString *)basicAuthenticationStringWithEncodingForUrl:(NSURL *)url;

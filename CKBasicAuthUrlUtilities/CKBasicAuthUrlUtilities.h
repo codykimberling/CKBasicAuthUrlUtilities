@@ -54,6 +54,12 @@ typedef enum : NSInteger {
 
 #pragma mark - NSString methods
 
+//  Returns an absolute string represntation of a given url without the authentication components
+- (NSString *)absoluteStringWithoutAuthenticationForUrl:(NSURL *)url;
+
+//  Returns an absolute string represntation of a given url with the password obfuscated
+- (NSString *)absoluteStringObfuscatedPassword:(NSURL *)url;
+
 //  Returns a basic authentication string (encoded) from a given url, returns nil if url does not contain an auth string
 - (NSString *)basicAuthenticationStringWithEncodingForUrl:(NSURL *)url;
 

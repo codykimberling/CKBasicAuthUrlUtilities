@@ -160,7 +160,47 @@
     STAssertEquals(actualUrl, expectedUrl, nil);
 }
 
-#pragma mark - NSURL Strip Auth Tests
+#pragma mark - NSURL Tests
+
+- (void)testAbsoluteStringWithoutAuthenticationForUrlWithAuth
+{
+    NSURL *url = [NSURL URLWithString:@"http://user:pass@www.google.com"];
+    NSString *expected = @"http://www.google.com";
+    
+    NSString *actual = [self.utilitiesHttpScheme absoluteStringWithoutAuthenticationForUrl:url];
+    
+    STAssertEqualObjects(expected, actual, nil);
+}
+
+- (void)testAbsoluteStringWithoutAuthenticationForUrlWithoutAuth
+{
+    NSURL *url = [NSURL URLWithString:@"http://www.google.com"];
+    NSString *expected = @"http://www.google.com";
+    
+    NSString *actual = [self.utilitiesHttpScheme absoluteStringWithoutAuthenticationForUrl:url];
+    
+    STAssertEqualObjects(expected, actual, nil);
+}
+
+- (void)testAbsoluteStringObfuscatedPasswordWithAuth
+{
+    NSURL *url = [NSURL URLWithString:@"http://user:pass@www.google.com"];
+    NSString *expected = @"http://user:****@www.google.com";
+    
+    NSString *actual = [self.utilitiesHttpScheme absoluteStringObfuscatedPassword:url];
+    
+    STAssertEqualObjects(expected, actual, nil);
+}
+
+- (void)testAbsoluteStringObfuscatedPasswordWithoutAuth
+{
+    NSURL *url = [NSURL URLWithString:@"http://www.google.com"];
+    NSString *expected = @"http://www.google.com";
+    
+    NSString *actual = [self.utilitiesHttpScheme absoluteStringObfuscatedPassword:url];
+    
+    STAssertEqualObjects(expected, actual, nil);
+}
 
 - (void)testUrlWithoutAuthenticationFromUrl
 {
