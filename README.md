@@ -6,13 +6,13 @@ Install via Cocoapods, add a line, like the one below, in your Podfile:
 
 `pod 'CKBasicAuthUrlUtilities',	'~> 0.0.6'`
 
-Then, um, use it:
+Then, um...use it:
 
 	CKBasicAuthUrlUtilities urlUtilities = CKBasicAuthUrlUtilities.new;
 
 Let's see what we can do:
 
-Create a NSURL with a non-encoded string, percent escapting the non-encoded string with NSUTF8StringEncoding:
+Create a NSURL with a non-encoded string, percent escaping the non-encoded string with NSUTF8StringEncoding (prepends scheme if missing):
 
 	- (NSURL *)urlWithUtf8EncodingForString:(NSString *)nonEncodedString;
 
@@ -56,7 +56,7 @@ This can be used when the server returns a 401 without a 403 response and the st
 
 Methods below from [NSData-Base64](https://github.com/l4u/NSData-Base64/blob/master/NSData%2BBase64.h)
 
-Retun NSData fromm a Base64 encoded string:
+Returns NSData fromm a Base64 encoded string:
 
 	- (NSData *)dataFromBase64String:(NSString *)aString;
 

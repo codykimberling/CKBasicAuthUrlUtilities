@@ -21,7 +21,7 @@ typedef enum : NSInteger {
 
 #pragma mark - NSURL encode string if needed
 
-//  Creates a NSURL with a non-encoded string, percent escapting the non-encoded string with NSUTF8StringEncoding
+//  Creates a NSURL with a non-encoded string, percent escaping the non-encoded string with NSUTF8StringEncoding
 //  If URL does not contain a scheme, the default scheme is used
 - (NSURL *)urlWithUtf8EncodingForString:(NSString *)nonEncodedString;
 
@@ -71,7 +71,7 @@ typedef enum : NSInteger {
 #pragma mark - NSData-Base64 methods
 //  Methods from NSData-Base64 (https://github.com/l4u/NSData-Base64/blob/master/NSData%2BBase64.h)
 
-//  Retuns NSData fromm a Base64 encoded string
+//  Returns NSData fromm a Base64 encoded string
 - (NSData *)dataFromBase64String:(NSString *)aString;
 
 //  Returns a NSString Base64 encoded
