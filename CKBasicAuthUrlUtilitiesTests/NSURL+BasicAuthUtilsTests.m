@@ -35,13 +35,18 @@ static NSString *kScheme = @"https";
     self.updatedUser = @"bob";
     self.updatedPassword = @"fluffyKitty99";
 }
+
 - (void)testHasScheme
 {
     NSURL *urlWithoutScheme = [NSURL URLWithString:@"www.google.com"];
+    NSURL *urlWithoutSchemeCustom = [NSURL URLWithString:@"ck.local:8080"];
     NSURL *urlWithScheme = [NSURL URLWithString:@"https://www.google.com"];
+    NSURL *urlWithSchemeCustom = [NSURL URLWithString:@"http://ck.local:8080"];
 
-    STAssertFalse(urlWithoutScheme.hasScheme, nil);
-    STAssertTrue(urlWithScheme.hasScheme, nil);
+    STAssertFalse(urlWithoutScheme.hasHttpOrHttpsScheme, nil);
+    STAssertFalse(urlWithoutSchemeCustom.hasHttpOrHttpsScheme, nil);
+    STAssertTrue(urlWithScheme.hasHttpOrHttpsScheme, nil);
+    STAssertTrue(urlWithSchemeCustom.hasHttpOrHttpsScheme, nil);
 }
 
 - (void)testHasAuthentication
