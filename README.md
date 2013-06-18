@@ -12,64 +12,66 @@ Then, um...use it:
 
 Let's see what we can do:
 
-Create a NSURL with a non-encoded string, percent escaping the non-encoded string with NSUTF8StringEncoding (prepends default scheme if missing):
+Create a NSURL with a non-encoded string, percent escaping the non-encoded string with NSUTF8StringEncoding (prepends default scheme if missing)
+Returns nil if nonEncodedString is nil.
 
 	- (NSURL *)urlWithUtf8EncodingForString:(NSString *)nonEncodedString;
 
-NSURL with an updated username, username encoded if needed (prepends default scheme if missing):
+NSURL with an updated username, username encoded if needed (prepends default scheme if missing).  Returns nil if url is nil.
 
 	- (NSURL *)urlWithUpdatedUsername:(NSString *)username forUrl:(NSURL *)url;
 
-NSURL with an updated password, password encoded if needed (prepends default scheme if missing):
+NSURL with an updated password, password encoded if needed (prepends default scheme if missing).  Returns nil if url is nil.
 
 	- (NSURL *)urlWithUpdatedPassword:(NSString *)password forUrl:(NSURL *)url;
 
-NSURL with an updated username and password, username and password will be encoded if needed (prepends default scheme if missing):
+NSURL with an updated username and password, username and password will be encoded if needed (prepends default scheme if missing).  Returns nil if url is nil.
 
 	- (NSURL *)urlWithUpdatedUsername:(NSString *)username andPassword:(NSString *)password forUrl:(NSURL *)url;
 
-NSURL with the authentication components stripped out:
+NSURL with the authentication components stripped out.  Returns nil if url is nil.
 
 	- (NSURL *)urlWithoutAuthenticationFromUrl:(NSURL *)url;
 
-Return YES if URL contains scheme:
+Return YES if URL has a HTTP or HTTPS scheme.  Returns NO if url is nil.
+	
+	- (BOOL)urlHasHttpOrHttpsScheme:(NSURL *)url;
 
-	- (BOOL)urlHasScheme:(NSURL *)url;
-
-Return YES if URL contains components for BASIC authentication:
+Return YES if URL contains components for BASIC authentication.  Returns NO if url is nil.
 
 	- (BOOL)urlHasAuthentication:(NSURL *)url;
 
 
-Return an absolute string represntation of a given url without the authentication components:
+Return an absolute string represntation of a given url without the authentication components.  Returns nil if url is nil.
 
 	- (NSString *)absoluteStringWithoutAuthenticationForUrl:(NSURL *)url;
 
-Return an absolute string represntation of a given url with the password obfuscated
+Return an absolute string represntation of a given url with the password obfuscated.  Returns nil if url is nil.
 
 	- (NSString *)absoluteStringObfuscatedPassword:(NSURL *)url;
 
-Return a basic authentication string (encoded) from a given url, returns nil if url does not contain an auth string:
+Return a basic authentication string (encoded) from a given url, returns nil if url does not contain an auth string.  Returns nil if url is nil.
 
 	- (NSString *)basicAuthenticationStringWithEncodingForUrl:(NSURL *)url;
 
-Return a basic authentication string (non-encoded) from a given url, returns nil if url does not contain an auth string:
+Return a basic authentication string (non-encoded) from a given url, returns nil if url does not contain an auth string.  Returns nil if url is nil.
 
 	- (NSString *)basicAuthenticationStringWithoutEncodingForUrl:(NSURL *)url;
 
 Preempt Authentication callbacks by initializing a NSMutableURLRequest with the provided url.
 If given URL has authentication, then add basic authentication to url request preemptively.
 This can be used when the server returns a 401 without a 403 response and the standard NSURLConnectionDelegate willSendRequestForAuthenticationChallenge is not automatically called 
+Returns nil if url is nil.
 
 	- (NSMutableURLRequest *)urlRequestWithPreemptiveBasicAuthenticationWithUrl:(NSURL *)url;
 
 Methods below from [NSData-Base64](https://github.com/l4u/NSData-Base64/blob/master/NSData%2BBase64.h)
 
-Returns NSData fromm a Base64 encoded string:
+Returns NSData fromm a Base64 encoded string.  Returns nil if string is nil.
 
-	- (NSData *)dataFromBase64String:(NSString *)aString;
+	- (NSData *)dataFromBase64String:(NSString *)string;
 
-Return a NSString Base64 encoded:
+Return a NSString Base64 encoded.  Returns nil if data is nil.
 
 	- (NSString *)base64EncodedStringForData:(NSData *)data;
 
@@ -81,7 +83,7 @@ If the [URL scheme component](http://en.wikipedia.org/wiki/URI_scheme#Official_I
 
 or 
 
-	CKBasicAuthUrlUtilities urlUtils = [[CKBasicAuthUrlUtilities alloc] initWithDefaultSchemeType:(CKBasicAuthUrlUtilitiesDefaultSchemeType)];
+	urlUtils = [[CKBasicAuthUrlUtilities alloc] initWithDefaultSchemeType:(CKBasicAuthUrlUtilitiesDefaultSchemeType)];
 
 
 where `CKBasicAuthUrlUtilitiesDefaultSchemeType` is either:
@@ -90,7 +92,3 @@ where `CKBasicAuthUrlUtilitiesDefaultSchemeType` is either:
 `CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttps`
 
 But you shouldn't be using BASIC auth over HTTP anyway, so don't do this!
-
-Nil or empty NSStrings should work as expected, see the unit tests for examples and feel free to contribute.
-
-
