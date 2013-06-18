@@ -12,19 +12,19 @@ Then, um...use it:
 
 Let's see what we can do:
 
-Create a NSURL with a non-encoded string, percent escaping the non-encoded string with NSUTF8StringEncoding (prepends scheme if missing):
+Create a NSURL with a non-encoded string, percent escaping the non-encoded string with NSUTF8StringEncoding (prepends default scheme if missing):
 
 	- (NSURL *)urlWithUtf8EncodingForString:(NSString *)nonEncodedString;
 
-NSURL with an updated username (username encoded if needed):
+NSURL with an updated username, username encoded if needed (prepends default scheme if missing):
 
 	- (NSURL *)urlWithUpdatedUsername:(NSString *)username forUrl:(NSURL *)url;
 
-NSURL with an updated password (password encoded if needed):
+NSURL with an updated password, password encoded if needed (prepends default scheme if missing):
 
 	- (NSURL *)urlWithUpdatedPassword:(NSString *)password forUrl:(NSURL *)url;
 
-NSURL with an updated username and password (username and password will be encoded if needed):
+NSURL with an updated username and password, username and password will be encoded if needed (prepends default scheme if missing):
 
 	- (NSURL *)urlWithUpdatedUsername:(NSString *)username andPassword:(NSString *)password forUrl:(NSURL *)url;
 
