@@ -11,9 +11,9 @@
 
 @implementation NSURL (BasicAuthUtils)
 
-- (BOOL)hasScheme
+- (BOOL)hasHttpOrHttpsScheme
 {
-    return self.scheme.isNotEmpty;
+    return [@[@"http", @"https"] containsObject:self.scheme];
 }
 
 - (BOOL)hasAuthentication
@@ -75,7 +75,7 @@
 
 - (NSURL *)urlWithDefaultSchemePrependedUsingScheme:(NSString *)scheme
 {
-    return (self.hasScheme) ? self : [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", scheme, self.absoluteString]];
+    return (self.hasHttpOrHttpsScheme) ? self : [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", scheme, self.absoluteString]];
 }
 
 - (BOOL)urlAuthContainsUsername

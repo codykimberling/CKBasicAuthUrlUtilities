@@ -9,7 +9,7 @@
 
 @interface NSURL (BasicAuthUtils)
 
-- (BOOL)hasScheme;
+- (BOOL)hasHttpOrHttpsScheme;
 - (BOOL)hasAuthentication;
 
 - (NSURL *)urlWithDefaultSchemePrependedUsingScheme:(NSString *)scheme;
