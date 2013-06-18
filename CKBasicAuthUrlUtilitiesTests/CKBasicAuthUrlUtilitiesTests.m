@@ -221,9 +221,9 @@
 {
     BOOL returnValue = YES;
     
-    [[[self.mockUrl expect] andReturnValue:OCMOCK_VALUE(returnValue)] hasScheme];
+    [[[self.mockUrl expect] andReturnValue:OCMOCK_VALUE(returnValue)] hasHttpOrHttpsScheme];
     
-    BOOL result = [self.utilitiesHttpScheme urlHasScheme:self.mockUrl];
+    BOOL result = [self.utilitiesHttpScheme urlHasHttpOrHttpsScheme:self.mockUrl];
     
     [self.mockUrl verify];
     
@@ -234,9 +234,9 @@
 {
     BOOL returnValue = NO;
     
-    [[[self.mockUrl expect] andReturnValue:OCMOCK_VALUE(returnValue)] hasScheme];
+    [[[self.mockUrl expect] andReturnValue:OCMOCK_VALUE(returnValue)] hasHttpOrHttpsScheme];
     
-    BOOL result = [self.utilitiesHttpScheme urlHasScheme:self.mockUrl];
+    BOOL result = [self.utilitiesHttpScheme urlHasHttpOrHttpsScheme:self.mockUrl];
     
     [self.mockUrl verify];
     
