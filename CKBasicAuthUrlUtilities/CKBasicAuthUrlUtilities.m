@@ -73,9 +73,9 @@
 
 #pragma mark - BOOL
 
-- (BOOL)urlHasScheme:(NSURL *)url
+- (BOOL)urlHasHttpOrHttpsScheme:(NSURL *)url
 {
-    return url.hasScheme;
+    return url.hasHttpOrHttpsScheme;
 }
 
 - (BOOL)urlHasAuthentication:(NSURL *)url
@@ -120,6 +120,11 @@
 
 - (NSMutableURLRequest *)urlRequestWithPreemptiveBasicAuthenticationWithUrl:(NSURL *)url
 {
+    return (!url) ? nil : [self urlRequestWithPreemptiveBasicAuthenticationWithNonNilUrl:url];
+}
+
+- (NSMutableURLRequest *)urlRequestWithPreemptiveBasicAuthenticationWithNonNilUrl:(NSURL *)url
+{
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     if([self urlHasAuthentication:url]){
         
@@ -136,9 +141,9 @@
 #pragma mark - NSData-Base64 methods
 //Mehtods from NSData-Base64 (https://github.com/l4u/NSData-Base64/blob/master/NSData%2BBase64.h)
 
-- (NSData *)dataFromBase64String:(NSString *)aString
+- (NSData *)dataFromBase64String:(NSString *)string
 {
-    return [NSData dataFromBase64String:aString];
+    return (!string) ? nil : [NSData dataFromBase64String:string];
 }
 
 - (NSString *)base64EncodedStringForData:(NSData *)data

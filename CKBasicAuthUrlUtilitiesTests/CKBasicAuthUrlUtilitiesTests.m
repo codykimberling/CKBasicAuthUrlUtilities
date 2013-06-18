@@ -80,6 +80,13 @@
     STAssertEquals(actualUrl, expectedUrl, nil);
 }
 
+- (void)testUrlWithUtf8EncodingForStringReturnsNilIfInputStringIsNil
+{
+    NSURL *actualUrl = [self.utilitiesHttpScheme urlWithUtf8EncodingForString:nil];
+    
+    STAssertTrue(actualUrl == nil, nil);
+}
+
 - (void)testUrlWithUtf8EncodingForStringWithoutScheme
 {
     NSString *urlWithoutScheme = @"www.google.com";
@@ -160,6 +167,13 @@
     STAssertEquals(actualUrl, expectedUrl, nil);
 }
 
+- (void)testUrlWithUpdatedUsernameAndPasswordWithNilUrl
+{
+    NSURL *actual = [self.utilitiesHttpsScheme urlWithUpdatedUsername:@"user" andPassword:@"pass" forUrl:nil];
+    
+    STAssertTrue(actual == nil, nil);
+}
+
 #pragma mark - NSURL Tests
 
 - (void)testAbsoluteStringWithoutAuthenticationForUrlWithAuth
@@ -202,6 +216,13 @@
     STAssertEqualObjects(expected, actual, nil);
 }
 
+- (void)testAbsoluteStringObfuscatedPasswordWithNilUrl
+{
+    NSString *actual = [self.utilitiesHttpScheme absoluteStringObfuscatedPassword:nil];
+    
+    STAssertTrue(actual == nil, nil);
+}
+
 - (void)testUrlWithoutAuthenticationFromUrl
 {
     NSURL *expectedUrl = NSURL.new;
@@ -213,6 +234,13 @@
     [self.mockUrl verify];
     
     STAssertEquals(actualUrl, expectedUrl, nil);
+}
+
+- (void)testUrlWithoutAuthenticationFromUrlWithNilUrl
+{
+    NSURL *actualUrl = [self.utilitiesHttpsScheme urlWithoutAuthenticationFromUrl:nil];
+    
+    STAssertTrue(actualUrl == nil, nil);
 }
 
 #pragma mark BOOL methods
@@ -243,6 +271,13 @@
     STAssertFalse(result, nil);
 }
 
+- (void)testUrlHasSchemeReturnsFalseForNilUrl
+{
+    BOOL result = [self.utilitiesHttpScheme urlHasHttpOrHttpsScheme:nil];
+    
+    STAssertFalse(result, nil);
+}
+
 - (void)testUrlHasAuthenticationReturnsTrue
 {
     BOOL returnValue = YES;
@@ -265,6 +300,13 @@
     BOOL result = [self.utilitiesHttpScheme urlHasAuthentication:self.mockUrl];
     
     [self.mockUrl verify];
+    
+    STAssertFalse(result, nil);
+}
+
+- (void)testUrlHasAuthenticationReturnsFalseIfNil
+{
+    BOOL result = [self.utilitiesHttpScheme urlHasAuthentication:nil];
     
     STAssertFalse(result, nil);
 }
@@ -293,6 +335,13 @@
     [self.mockUrl verify];
     
     STAssertEqualObjects(actual, expected, nil);
+}
+
+- (void)testAuthenticationStringWithoutEncodingForNilUrl
+{
+    NSString *actual = [self.utilitiesHttpScheme basicAuthenticationStringWithoutEncodingForUrl:nil];
+    
+    STAssertTrue(actual == nil, nil);
 }
 
 #pragma mark - NSURLRequest
@@ -337,6 +386,13 @@
     [partialMockUtils stopMocking];
 }
 
+- (void)testUrlRequestReturnsNilRequesstWithoutNilUrl
+{
+    NSMutableURLRequest *actual = [self.utilitiesHttpScheme urlRequestWithPreemptiveBasicAuthenticationWithUrl:nil];
+    
+    STAssertTrue(actual == nil, nil);
+}
+
 #pragma mark - NSData-Base64 methods
 
 - (void)testDataFromBase64String
@@ -353,6 +409,13 @@
     STAssertEqualObjects(actual, expected, nil);
 }
 
+- (void)testDataFromBase64StringWithNil
+{
+    NSData *actual = [self.utilitiesHttpScheme dataFromBase64String:nil];
+    
+    STAssertTrue(actual == nil, nil);
+}
+
 - (void)testBase64EncodedStringForData
 {
     NSString *expected = @"TEST";
@@ -364,6 +427,13 @@
     [self.mockData verify];
     
     STAssertEqualObjects(actual, expected, nil);
+}
+
+- (void)testBase64EncodedStringForNilData
+{
+    NSString *actual = [self.utilitiesHttpScheme base64EncodedStringForData:nil];
+    
+    STAssertTrue(actual == nil, nil);
 }
 
 @end
