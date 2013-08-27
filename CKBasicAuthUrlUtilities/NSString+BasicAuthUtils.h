@@ -10,7 +10,7 @@
 @interface NSString (BasicAuthUtils)
 
 - (NSString *)urlSafeString;
-- (BOOL)doesStringContainIllegalHttpCharacters;
+- (BOOL)doesStringContainIllegalUrlCharacters;
 
 - (NSString *)basicAuthStringWithUser:(NSString *)user andPassword:(NSString *)password;
 - (NSString *)basicAuthStringWithUser:(NSString *)user andPassword:(NSString *)password shouldEncode:(BOOL)shouldEncode;

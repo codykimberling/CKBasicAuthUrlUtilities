@@ -13,7 +13,7 @@ static NSString *kIllegalCharacterSet = @"!*'();:@&=+@,/?#[]";
 
 - (NSString *)urlSafeString
 {
-    return self.doesStringContainIllegalHttpCharacters ? self.stringWithUrlEncoding : self;
+    return self.doesStringContainIllegalUrlCharacters ? self.stringWithUrlEncoding : self;
 }
 
 - (NSString *)stringWithUrlEncoding
@@ -22,7 +22,7 @@ static NSString *kIllegalCharacterSet = @"!*'();:@&=+@,/?#[]";
                                                                      NULL, (__bridge CFStringRef)self.illegalCharacterSet, kCFStringEncodingUTF8));
 }
 
-- (BOOL)doesStringContainIllegalHttpCharacters
+- (BOOL)doesStringContainIllegalUrlCharacters
 {
     return ([self rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:self.illegalCharacterSet]].location != NSNotFound);
 }

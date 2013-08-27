@@ -53,7 +53,7 @@
         unichar c = [self.string.illegalCharacterSet characterAtIndex:i];
         NSString *illegalCharacter = [NSString stringWithFormat: @"%C", c];
         
-        STAssertTrue(illegalCharacter.doesStringContainIllegalHttpCharacters,nil);
+        STAssertTrue(illegalCharacter.doesStringContainIllegalUrlCharacters,nil);
     }
 
 }
@@ -66,7 +66,7 @@
         unichar c = [validCharacters characterAtIndex:i];
         NSString *legalCharacter = [NSString stringWithFormat: @"%C", c];
         
-        STAssertFalse(legalCharacter.doesStringContainIllegalHttpCharacters,nil);
+        STAssertFalse(legalCharacter.doesStringContainIllegalUrlCharacters,nil);
     }
 }
 
