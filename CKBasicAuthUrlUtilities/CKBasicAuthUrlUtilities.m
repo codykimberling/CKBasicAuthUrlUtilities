@@ -88,6 +88,11 @@
     return (self.schemeType == CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttps) ? @"https" : @"http";
 }
 
+- (BOOL)doesStringContainIllegalUrlCharacters:(NSString *)string
+{
+    return string.doesStringContainIllegalUrlCharacters;
+}
+
 #pragma mark - NSString methods
 
 - (NSString *)absoluteStringWithoutAuthenticationForUrl:(NSURL *)url
@@ -116,6 +121,11 @@
     return url.basicAuthenticationStringWithoutEncoding;
 }
 
+- (NSString *)urlSafeStringFromString:(NSString *)string
+{
+    return (!string) ? nil : string.urlSafeString;
+}
+
 #pragma mark - NSURLRequest methods
 
 - (NSMutableURLRequest *)urlRequestWithPreemptiveBasicAuthenticationWithUrl:(NSURL *)url
@@ -136,18 +146,6 @@
         [request setValue:authenticationValue forHTTPHeaderField:@"Authorization"];
     }
     return request;
-}
-
-#pragma mark - NSString methods
-
-- (NSString *)urlSafeStringFromString:(NSString *)string
-{
-    return (!string) ? nil : string.urlSafeString;
-}
-
-- (BOOL)doesStringContainIllegalUrlCharacters:(NSString *)string
-{
-    return string.doesStringContainIllegalUrlCharacters;
 }
 
 #pragma mark - NSData-Base64 methods

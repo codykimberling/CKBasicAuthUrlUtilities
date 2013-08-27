@@ -59,6 +59,11 @@ typedef enum : NSInteger {
 //  Returns NO if url is nil
 - (BOOL)urlHasAuthentication:(NSURL *)url;
 
+// Returns YES if string contains illegal URL characters
+// Returns NO if string does not contain illegal URL characters
+// Returns NO if string is nil
+- (BOOL)doesStringContainIllegalUrlCharacters:(NSString *)string;
+
 #pragma mark - NSString methods
 
 //  Returns an absolute string represntation of a given url without the authentication components
@@ -77,6 +82,10 @@ typedef enum : NSInteger {
 //  Returns nil if url is nil
 - (NSString *)basicAuthenticationStringWithoutEncodingForUrl:(NSURL *)url;
 
+// Returns a URL safe string, encodes illegal characters.
+// Returns nil if string is nil
+- (NSString *)urlSafeStringFromString:(NSString *)string;
+
 #pragma mark - NSURLRequest methods
 
 //  Preempt Authentication callbacks by initializing a NSMutableURLRequest with the provided url.
@@ -85,17 +94,6 @@ typedef enum : NSInteger {
 //  willSendRequestForAuthenticationChallenge is not automatically called
 //  Returns nil if url is nil
 - (NSMutableURLRequest *)urlRequestWithPreemptiveBasicAuthenticationWithUrl:(NSURL *)url;
-
-#pragma mark - NSString methods
-
-// Returns a URL safe string, encodes illegal characters.
-// Returns nil if string is nil
-- (NSString *)urlSafeStringFromString:(NSString *)string;
-
-// Returns YES if string contains illegal URL characters
-// Returns NO if string does not contain illegal URL characters
-// Returns NO if string is nil
-- (BOOL)doesStringContainIllegalUrlCharacters:(NSString *)string;
 
 #pragma mark - NSData-Base64 methods
 //  Methods from NSData-Base64 (https://github.com/l4u/NSData-Base64/blob/master/NSData%2BBase64.h)
