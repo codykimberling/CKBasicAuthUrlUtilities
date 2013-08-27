@@ -64,8 +64,16 @@ This can be used when the server returns a 401 without a 403 response and the st
 Returns nil if url is nil.
 
 	- (NSMutableURLRequest *)urlRequestWithPreemptiveBasicAuthenticationWithUrl:(NSURL *)url;
+    
+Returns a URL safe string, encodes illegal characters.  Returns nil if string is nil
+    
+    - (NSString *)urlSafeStringFromString:(NSString *)string;
 
-Methods below from [NSData-Base64](https://github.com/l4u/NSData-Base64/blob/master/NSData%2BBase64.h)
+Returns YES if string contains illegal URL characters.  Returns NO if the string does not contain illegal characters or if the string is nil.
+
+    - (BOOL)doesStringContainIllegalUrlCharacters:(NSString *)string;
+
+_The two methods below are from [NSData-Base64](https://github.com/l4u/NSData-Base64/blob/master/NSData%2BBase64.h)_
 
 Returns NSData fromm a Base64 encoded string.  Returns nil if string is nil.
 
