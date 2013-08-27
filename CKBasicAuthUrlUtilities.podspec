@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         =  'CKBasicAuthUrlUtilities'
-  s.version      =  '0.0.10'
+  s.version      =  '0.0.11'
   s.platform 	   =  :ios
   s.license      =  {:type => 'BSD'}
   s.homepage     =  'https://github.com/codykimberling/CKBasicAuthUrlUtilities'
