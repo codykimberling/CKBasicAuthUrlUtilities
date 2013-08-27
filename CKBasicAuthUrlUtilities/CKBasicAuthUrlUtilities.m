@@ -138,6 +138,18 @@
     return request;
 }
 
+#pragma mark - NSString methods
+
+- (NSString *)urlSafeStringFromString:(NSString *)string
+{
+    return (!string) ? nil : string.urlSafeString;
+}
+
+- (BOOL)doesStringContainIllegalUrlCharacters:(NSString *)string
+{
+    return string.doesStringContainIllegalUrlCharacters;
+}
+
 #pragma mark - NSData-Base64 methods
 //Mehtods from NSData-Base64 (https://github.com/l4u/NSData-Base64/blob/master/NSData%2BBase64.h)
 

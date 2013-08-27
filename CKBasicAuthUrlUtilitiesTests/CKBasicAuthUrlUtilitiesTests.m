@@ -436,4 +436,64 @@
     STAssertTrue(actual == nil, nil);
 }
 
+#pragma mark - NSString methods
+
+- (void)testUrlSafeString
+{
+    NSString *expectedString = @"ABC";
+    [[[self.mockString expect] andReturn:expectedString] urlSafeString];
+    
+    NSString *actualString = [self.utilitiesHttpScheme urlSafeStringFromString:self.mockString];
+    
+    [self.mockString verify];
+    
+    STAssertEqualObjects(actualString, expectedString, nil);
+}
+
+- (void)testUrlSafeStringReturnsNilWithNilArgument
+{
+    [[self.mockString reject] urlSafeString];
+    
+    NSString *returnedString = [self.utilitiesHttpScheme urlSafeStringFromString:nil];
+    
+    [self.mockString verify];
+    
+    STAssertNil(returnedString, nil);
+}
+
+- (void)testDoesStringContainIllegalUrlCharactersReturnsTrue
+{
+    BOOL expectedReturnBool = YES;
+    [[[self.mockString expect] andReturnValue:OCMOCK_VALUE(expectedReturnBool)] doesStringContainIllegalUrlCharacters];
+    
+    BOOL conntainsIllegalCharacters = [self.utilitiesHttpScheme doesStringContainIllegalUrlCharacters:self.mockString];
+    
+    [self.mockString verify];
+    
+    STAssertTrue(conntainsIllegalCharacters, nil);
+}
+
+- (void)testDoesStringContainIllegalUrlCharactersReturnsFalse
+{
+    BOOL expectedReturnBool = NO;
+    [[[self.mockString expect] andReturnValue:OCMOCK_VALUE(expectedReturnBool)] doesStringContainIllegalUrlCharacters];
+    
+    BOOL conntainsIllegalCharacters = [self.utilitiesHttpScheme doesStringContainIllegalUrlCharacters:self.mockString];
+    
+    [self.mockString verify];
+    
+    STAssertFalse(conntainsIllegalCharacters, nil);
+}
+
+- (void)testDoesStringContainIllegalUrlCharactersWithNilArgument
+{
+    [[self.mockString reject] doesStringContainIllegalUrlCharacters];
+    
+    BOOL conntainsIllegalCharacters = [self.utilitiesHttpScheme doesStringContainIllegalUrlCharacters:nil];
+    
+    [self.mockString verify];
+    
+    STAssertFalse(conntainsIllegalCharacters, nil);
+}
+
 @end
