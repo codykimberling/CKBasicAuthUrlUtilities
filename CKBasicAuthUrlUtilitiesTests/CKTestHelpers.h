@@ -21,6 +21,8 @@
 
 - (NSString *)illegalCharacterSet;
 - (NSString *)stringWithUrlEncoding;
+- (NSString *)urlSafeString;
+- (BOOL)doesStringContainIllegalUrlCharacters;
 
 @end
 
