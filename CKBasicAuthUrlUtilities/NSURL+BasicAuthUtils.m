@@ -6,8 +6,8 @@
 //  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "NSURL+BasicAuthUtils.h"
-#import "NSString+Utils.h"
 #import "NSString+BasicAuthUtils.h"
+#import "CKStringUtils.h"
 
 @implementation NSURL (BasicAuthUtils)
 
@@ -18,7 +18,7 @@
 
 - (BOOL)hasAuthentication
 {
-    return (self.user.isNotEmpty || self.password.isNotEmpty);
+    return [CKStringUtils isNotEmpty:self.user] || [CKStringUtils isNotEmpty:self.password];
 }
 
 #pragma mark - Update username or password Tests
@@ -39,11 +39,11 @@
     
     NSString *oldAuthString = (url.hasAuthentication) ? [self.absoluteString basicAuthStringWithUser:url.user.urlSafeString andPassword:url.password.urlSafeString] : @"";
 
-    NSString *newAuthString = (username.isNotEmpty || password.isNotEmpty) ? [self.absoluteString basicAuthStringWithUser:username andPassword:password] : @"";
+    NSString *newAuthString = ([CKStringUtils isNotEmpty:username] || [CKStringUtils isNotEmpty:password]) ? [self.absoluteString basicAuthStringWithUser:username andPassword:password] : @"";
     
     NSString *newUrlString;
     
-    if(oldAuthString.isNotEmpty){
+    if([CKStringUtils isNotEmpty:oldAuthString]){
         newUrlString = [url.absoluteString
                         stringByReplacingOccurrencesOfString:oldAuthString
                         withString:newAuthString
@@ -110,7 +110,7 @@
 
 - (NSString *)basicAuthenticationStringShouldEncodeResult:(BOOL)shouldEncode
 {
-    if(self.user.isNotEmpty || self.password.isNotEmpty){
+    if(self.hasAuthentication){
         if(shouldEncode){
             return [NSString stringWithFormat:@"%@:%@", self.user.urlSafeString, self.password.urlSafeString];
         }

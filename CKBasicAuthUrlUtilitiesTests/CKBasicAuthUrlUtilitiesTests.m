@@ -11,7 +11,6 @@
 #import "NSString+BasicAuthUtils.h"
 #import "NSURL+BasicAuthUtils.h"
 #import "CKTestHelpers.h"
-#import "NSData+Base64.h"
 
 @interface CKBasicAuthUrlUtilitiesTests ()
 
@@ -101,6 +100,16 @@
     STAssertEqualObjects(actualUrlForHttpsScheme, expectedUrlForHttpsScheme, nil);
 }
 
+- (void)testTmp
+{
+    NSString *url = @"http://user@gmail.com:password@www.google.com";
+    
+    NSString *expectedUrlAsString = [NSURL URLWithString:@"http://user%40gmail.com:password@www.google.com"];
+    
+    NSString *actualUrlAsString = [self.utilitiesHttpScheme urlWithUtf8EncodingForString:url].absoluteString;
+    
+    STAssertEqualObjects(expectedUrlAsString, actualUrlAsString, nil);
+}
 
 #pragma mark - NSURL Update User/Password Tests
 
@@ -472,19 +481,6 @@
     NSData *actual = [self.utilitiesHttpScheme dataFromBase64String:nil];
     
     STAssertTrue(actual == nil, nil);
-}
-
-- (void)testBase64EncodedStringForData
-{
-    NSString *expected = @"TEST";
-    
-    [[[self.mockData expect] andReturn:expected] base64EncodedString];
-    
-    NSString *actual = [self.utilitiesHttpScheme base64EncodedStringForData:self.mockData];
-    
-    [self.mockData verify];
-    
-    STAssertEqualObjects(actual, expected, nil);
 }
 
 - (void)testBase64EncodedStringForNilData

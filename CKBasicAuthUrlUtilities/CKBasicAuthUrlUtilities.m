@@ -8,7 +8,7 @@
 #import "CKBasicAuthUrlUtilities.h"
 #import "NSURL+BasicAuthUtils.h"
 #import "NSString+BasicAuthUtils.h"
-#import "NSData+Base64.h"
+#import "CKStringUtils.h"
 
 @interface CKBasicAuthUrlUtilities ()
 
@@ -123,7 +123,7 @@
 
 - (NSString *)urlSafeStringFromString:(NSString *)string
 {
-    return (!string) ? nil : string.urlSafeString;
+    return [CKStringUtils isNil:string] ? nil : string.urlSafeString;
 }
 
 #pragma mark - NSURLRequest methods
@@ -138,27 +138,27 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     if([self urlHasAuthentication:url]){
         
-        NSString *authenticationString =  [self basicAuthenticationStringWithEncodingForUrl:url];
-        NSData *authenticationData = [authenticationString dataUsingEncoding:NSASCIIStringEncoding];
+        NSString *usernamePasswordString = [NSString stringWithFormat:@"%@:%@", url.user, url.password];
+        NSData *data = [self dataFromBase64String:usernamePasswordString];
         
-        NSString *authenticationValue = [NSString stringWithFormat:@"Basic %@", [self base64EncodedStringForData:authenticationData]];
+        NSString *base64String = [self base64EncodedStringForData:data];
+        
+        NSString *authenticationValue = [NSString stringWithFormat:@"Basic %@", base64String];
         
         [request setValue:authenticationValue forHTTPHeaderField:@"Authorization"];
     }
     return request;
 }
 
-#pragma mark - NSData-Base64 methods
-//Mehtods from NSData-Base64 (https://github.com/l4u/NSData-Base64/blob/master/NSData%2BBase64.h)
-
 - (NSData *)dataFromBase64String:(NSString *)string
 {
-    return (!string) ? nil : [NSData dataFromBase64String:string];
+    return [CKStringUtils isNil:string] ? nil : [string dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (NSString *)base64EncodedStringForData:(NSData *)data
 {
-    return data.base64EncodedString;
+    return [data base64EncodedStringWithOptions:0];
 }
+
 
 @end

@@ -36,5 +36,8 @@
 
 - (NSString *)scheme;
 - (NSString *)basicAuthenticationStringShouldEncodeResult:(BOOL)shouldEncode;
+- (NSData *)dataFromBase64String:(NSString *)string;
+- (NSString *)base64EncodedStringForData:(NSData *)data;
+
 
 @end

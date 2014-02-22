@@ -1,7 +1,7 @@
-platform :ios, '6.0'
+platform :ios, '7.0'
 inhibit_all_warnings!
 
-pod 'NSData+Base64',			'~> 1.0.0'
+pod 'CKStringUtils', 			'~> 1.1.2'
 
 target :CKBasicAuthUrlUtilitiesTests, :exclusive => true do
     pod 'OCMock', 		:head

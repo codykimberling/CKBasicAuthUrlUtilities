@@ -95,15 +95,4 @@ typedef enum : NSInteger {
 //  Returns nil if url is nil
 - (NSMutableURLRequest *)urlRequestWithPreemptiveBasicAuthenticationWithUrl:(NSURL *)url;
 
-#pragma mark - NSData-Base64 methods
-//  Methods from NSData-Base64 (https://github.com/l4u/NSData-Base64/blob/master/NSData%2BBase64.h)
-
-//  Returns NSData fromm a Base64 encoded string
-//  Returns nil if string is nil
-- (NSData *)dataFromBase64String:(NSString *)string;
-
-//  Returns a NSString Base64 encoded
-//  Returns nil if data is nil
-- (NSString *)base64EncodedStringForData:(NSData *)data;
-
 @end

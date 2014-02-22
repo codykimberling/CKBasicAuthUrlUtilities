@@ -8,7 +8,6 @@
 #import "NSURL+BasicAuthUtilsTests.h"
 #import "OCMock.h"
 #import "NSURL+BasicAuthUtils.h"
-#import "NSString+Utils.h"
 #import "CKTestHelpers.h"
 
 static NSString *kScheme = @"https";
