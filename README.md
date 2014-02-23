@@ -73,16 +73,6 @@ Returns YES if string contains illegal URL characters.  Returns NO if the string
 
     - (BOOL)doesStringContainIllegalUrlCharacters:(NSString *)string;
 
-_The two methods below are from [NSData-Base64](https://github.com/l4u/NSData-Base64/blob/master/NSData%2BBase64.h)_
-
-Returns NSData fromm a Base64 encoded string.  Returns nil if string is nil.
-
-	- (NSData *)dataFromBase64String:(NSString *)string;
-
-Return a NSString Base64 encoded.  Returns nil if data is nil.
-
-	- (NSString *)base64EncodedStringForData:(NSData *)data;
-
 ----
 
 If the [URL scheme component](http://en.wikipedia.org/wiki/URI_scheme#Official_IANA-registered_schemes) is missing in your NSURL,  CKBasicAuthUrlUtilities  automatically uses https by default, but can use http if desired.  It can be set via a property after initialization or on creation:
@@ -99,4 +89,4 @@ where `CKBasicAuthUrlUtilitiesDefaultSchemeType` is either:
 `CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttp` or 
 `CKBasicAuthUrlUtilitiesDefaultSchemeTypeHttps`
 
-But you shouldn't be using BASIC auth over HTTP anyway, so don't do this!
+But you shouldn't be using basic auth over HTTP anyway, so don't do this!
