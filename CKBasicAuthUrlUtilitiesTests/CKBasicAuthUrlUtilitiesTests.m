@@ -100,17 +100,6 @@
     STAssertEqualObjects(actualUrlForHttpsScheme, expectedUrlForHttpsScheme, nil);
 }
 
-- (void)testTmp
-{
-    NSString *url = @"http://user@gmail.com:password@www.google.com";
-    
-    NSString *expectedUrlAsString = [NSURL URLWithString:@"http://user%40gmail.com:password@www.google.com"];
-    
-    NSString *actualUrlAsString = [self.utilitiesHttpScheme urlWithUtf8EncodingForString:url].absoluteString;
-    
-    STAssertEqualObjects(expectedUrlAsString, actualUrlAsString, nil);
-}
-
 #pragma mark - NSURL Update User/Password Tests
 
 - (void)testUrlWithUpdatedUsername
@@ -425,34 +414,6 @@
     STAssertEqualObjects(actual.URL, expected, nil);
 }
 
-- (void)testUrlRequestReturnsInitializedRequesstWithoutAuthHeaderIfUrlDoesNotProvideUsernameOrPassword_
-{
-    id partialMockUtils = [OCMockObject partialMockForObject:self.utilitiesHttpScheme];
-    
-    NSURL *url = [NSURL URLWithString:@"http://user:password@www.yahoo.com"];
-    NSString *encodedString = @"TESTING";
-    NSString *expectedString = [NSString stringWithFormat:@"Basic %@", encodedString];
-    
-    [[[partialMockUtils expect] andReturn:self.mockString] basicAuthenticationStringWithEncodingForUrl:url];
-    
-    [[[self.mockString expect] andReturn:self.mockData] dataUsingEncoding:NSASCIIStringEncoding];
-    
-    [[[partialMockUtils expect] andReturn:encodedString] base64EncodedStringForData:self.mockData];
-    
-    
-    NSMutableURLRequest *actual = [self.utilitiesHttpScheme urlRequestWithPreemptiveBasicAuthenticationWithUrl:url];
-    
-    id value = [actual.allHTTPHeaderFields objectForKey:@"Authorization"];
-    
-    [partialMockUtils verify];
-    [self.mockString verify];
-    
-    STAssertEqualObjects(value, expectedString, nil);
-    STAssertEqualObjects(actual.URL, url, nil);
-    
-    [partialMockUtils stopMocking];
-}
-
 - (void)testUrlRequestReturnsNilRequesstWithoutNilUrl
 {
     NSMutableURLRequest *actual = [self.utilitiesHttpScheme urlRequestWithPreemptiveBasicAuthenticationWithUrl:nil];
@@ -465,13 +426,14 @@
 - (void)testDataFromBase64String
 {
     NSString *inputString = @"TEST";
-    NSData *expected = NSData.new;
-    
-    [[[self.mockData expect] andReturn:expected] dataFromBase64String:inputString];
+    NSData *expected = [NSData new];
+
+    id partialMockUtils = [OCMockObject partialMockForObject:self.utilitiesHttpScheme];
+    [[[partialMockUtils expect] andReturn:expected] dataFromBase64String:inputString];
     
     NSData *actual = [self.utilitiesHttpScheme dataFromBase64String:inputString];
     
-    [self.mockData verify];
+    [partialMockUtils verify];
     
     STAssertEqualObjects(actual, expected, nil);
 }

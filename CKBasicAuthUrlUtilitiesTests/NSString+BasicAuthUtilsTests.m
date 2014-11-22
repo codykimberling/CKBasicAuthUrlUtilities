@@ -125,19 +125,6 @@
     STAssertEqualObjects(actualString, expectedString, nil);
 }
 
-- (void)testBasicAuthStringWithUserAndPasswordEncodesByDefault
-{
-    NSString *str = NSString.new;
-    id partialMock = [OCMockObject partialMockForObject:str];
-    
-    [[partialMock expect] basicAuthStringWithUser:@"user" andPassword:@"pass" shouldEncode:YES];
-    
-    [str basicAuthStringWithUser:@"user" andPassword:@"pass"];
-    
-    [partialMock verify];
-    [partialMock stopMocking];
-}
-
 - (void)basicAuthStringWithUserAndPasswordShouldEncode
 {
     NSString *illegalUsername = @"user!";
