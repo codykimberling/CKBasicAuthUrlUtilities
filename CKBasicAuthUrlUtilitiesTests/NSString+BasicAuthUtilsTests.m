@@ -30,7 +30,7 @@
 
 - (void)testIllegalCharacters
 {
-    STAssertEqualObjects(self.string.illegalCharacterSet, @"!*'();:@&=+@,/?#[]",nil);
+    XCTAssertEqualObjects(self.string.illegalCharacterSet, @"!*'();:@&=+@,/?#[]");
 }
 
 - (void)testStringWithUrlEncoding
@@ -43,7 +43,7 @@
         
         NSString *expectedCharacter = [self.illegalCharacterToUrlEncodedCharacterDictionary objectForKey:illegalCharacter];
         
-        STAssertEqualObjects(actualCharacter, expectedCharacter, nil);
+        XCTAssertEqualObjects(actualCharacter, expectedCharacter);
     }
 }
 
@@ -53,7 +53,7 @@
         unichar c = [self.string.illegalCharacterSet characterAtIndex:i];
         NSString *illegalCharacter = [NSString stringWithFormat: @"%C", c];
         
-        STAssertTrue(illegalCharacter.doesStringContainIllegalUrlCharacters,nil);
+        XCTAssertTrue(illegalCharacter.doesStringContainIllegalUrlCharacters);
     }
 
 }
@@ -66,7 +66,7 @@
         unichar c = [validCharacters characterAtIndex:i];
         NSString *legalCharacter = [NSString stringWithFormat: @"%C", c];
         
-        STAssertFalse(legalCharacter.doesStringContainIllegalUrlCharacters,nil);
+        XCTAssertFalse(legalCharacter.doesStringContainIllegalUrlCharacters);
     }
 }
 
@@ -74,7 +74,7 @@
 {
     for (NSString *illegalString in self.illegalCharacterToUrlEncodedCharacterDictionary.allKeys){
         NSString *encodedString = [self.illegalCharacterToUrlEncodedCharacterDictionary objectForKey:illegalString];
-        STAssertEqualObjects(illegalString.urlSafeString, encodedString, nil);
+        XCTAssertEqualObjects(illegalString.urlSafeString, encodedString);
     }
 }
 
@@ -86,7 +86,7 @@
     
     NSString *actualString = [@"" basicAuthStringWithUser:@"user" andPassword:@"pass"];
     
-    STAssertEqualObjects(actualString, expectedString, nil);
+    XCTAssertEqualObjects(actualString, expectedString);
 }
 
 - (void)testBasicAuthStringWithEmptyUserAndPassword
@@ -95,7 +95,7 @@
     
     NSString *actualString = [@"" basicAuthStringWithUser:@"" andPassword:@"pass"];
     
-    STAssertEqualObjects(actualString, expectedString, nil);
+    XCTAssertEqualObjects(actualString, expectedString);
 }
 
 - (void)testBasicAuthStringWithNilUserAndPassword
@@ -104,7 +104,7 @@
     
     NSString *actualString = [@"" basicAuthStringWithUser:nil andPassword:@"pass"];
     
-    STAssertEqualObjects(actualString, expectedString, nil);
+    XCTAssertEqualObjects(actualString, expectedString);
 }
 
 - (void)testBasicAuthStringWithUserAndEmptyPassword
@@ -113,7 +113,7 @@
     
     NSString *actualString = [@"" basicAuthStringWithUser:@"user" andPassword:@""];
     
-    STAssertEqualObjects(actualString, expectedString, nil);
+    XCTAssertEqualObjects(actualString, expectedString);
 }
 
 - (void)testBasicAuthStringWithUserAndNilPassword
@@ -122,7 +122,7 @@
     
     NSString *actualString = [@"" basicAuthStringWithUser:@"user" andPassword:nil];
     
-    STAssertEqualObjects(actualString, expectedString, nil);
+    XCTAssertEqualObjects(actualString, expectedString);
 }
 
 - (void)basicAuthStringWithUserAndPasswordShouldEncode
@@ -134,7 +134,7 @@
     
     NSString *actualString = [@"" basicAuthStringWithUser:illegalUsername andPassword:@"pass" shouldEncode:YES];
     
-    STAssertEqualObjects(actualString, expectedString, nil);
+    XCTAssertEqualObjects(actualString, expectedString);
 }
 
 - (void)basicAuthStringWithUserAndPasswordShouldNotEncode
@@ -145,7 +145,7 @@
     
     NSString *actualString = [@"" basicAuthStringWithUser:illegalUsername andPassword:@"pass" shouldEncode:NO];
     
-    STAssertEqualObjects(actualString, expectedString, nil);
+    XCTAssertEqualObjects(actualString, expectedString);
 }
 
 - (NSDictionary *)retrieveIllegalCharacterDictionary

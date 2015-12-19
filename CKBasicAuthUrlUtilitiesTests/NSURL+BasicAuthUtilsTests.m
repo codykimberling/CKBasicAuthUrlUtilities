@@ -42,10 +42,10 @@ static NSString *kScheme = @"https";
     NSURL *urlWithScheme = [NSURL URLWithString:@"https://www.google.com"];
     NSURL *urlWithSchemeCustom = [NSURL URLWithString:@"http://ck.local:8080"];
 
-    STAssertFalse(urlWithoutScheme.hasHttpOrHttpsScheme, nil);
-    STAssertFalse(urlWithoutSchemeCustom.hasHttpOrHttpsScheme, nil);
-    STAssertTrue(urlWithScheme.hasHttpOrHttpsScheme, nil);
-    STAssertTrue(urlWithSchemeCustom.hasHttpOrHttpsScheme, nil);
+    XCTAssertFalse(urlWithoutScheme.hasHttpOrHttpsScheme);
+    XCTAssertFalse(urlWithoutSchemeCustom.hasHttpOrHttpsScheme);
+    XCTAssertTrue(urlWithScheme.hasHttpOrHttpsScheme);
+    XCTAssertTrue(urlWithSchemeCustom.hasHttpOrHttpsScheme);
 }
 
 - (void)testHasAuthentication
@@ -55,34 +55,34 @@ static NSString *kScheme = @"https";
     NSURL *urlWithoutUserWithPassword = [self urlWithUser:nil andPassword:@"password"];
     NSURL *urlWithUserAndPassword = self.urlWithOldUserAndOldPassword;
 
-    STAssertFalse(urlWithoutUserOrPassword.hasAuthentication, nil);
-    STAssertTrue(urlWithUserWithoutPassword.hasAuthentication, nil);
-    STAssertTrue(urlWithoutUserWithPassword.hasAuthentication, nil);
-    STAssertTrue(urlWithUserAndPassword.hasAuthentication, nil);
+    XCTAssertFalse(urlWithoutUserOrPassword.hasAuthentication);
+    XCTAssertTrue(urlWithUserWithoutPassword.hasAuthentication);
+    XCTAssertTrue(urlWithoutUserWithPassword.hasAuthentication);
+    XCTAssertTrue(urlWithUserAndPassword.hasAuthentication);
 }
 
 - (void)testUrlWithUpdatedUsernameAndPassword
 {
     NSURL *newUrl = [self.urlWithOldUserAndOldPassword urlWithUpdatedUsername:self.updatedUser andPassword:self.updatedPassword withScheme:kScheme];
     
-    STAssertEqualObjects(newUrl.user, self.updatedUser, nil);
-    STAssertEqualObjects(newUrl.password, self.updatedPassword, nil);
+    XCTAssertEqualObjects(newUrl.user, self.updatedUser);
+    XCTAssertEqualObjects(newUrl.password, self.updatedPassword);
 }
 
 - (void)testUrlWithUpdatedUsernameOnly
 {
     NSURL *newUrl = [self.urlWithOldUserAndOldPassword urlWithUpdatedUsername:self.updatedUser andPassword:self.oldPassword withScheme:kScheme];
     
-    STAssertEqualObjects(newUrl.user, self.updatedUser, nil);
-    STAssertEqualObjects(newUrl.password, self.oldPassword, nil);
+    XCTAssertEqualObjects(newUrl.user, self.updatedUser);
+    XCTAssertEqualObjects(newUrl.password, self.oldPassword);
 }
 
 - (void)testUrlWithUpdatedPasswordOnly
 {
     NSURL *newUrl = [self.urlWithOldUserAndOldPassword urlWithUpdatedUsername:self.oldUser andPassword:self.updatedPassword withScheme:kScheme];
     
-    STAssertEqualObjects(newUrl.user, self.oldUser, nil);
-    STAssertEqualObjects(newUrl.password, self.updatedPassword, nil);
+    XCTAssertEqualObjects(newUrl.user, self.oldUser);
+    XCTAssertEqualObjects(newUrl.password, self.updatedPassword);
 }
 
 - (void)testUrlWithUpdatedUsernameOnlyWithNoPreviousUsername
@@ -90,8 +90,8 @@ static NSString *kScheme = @"https";
     NSURL *oldUrl = [self urlWithUser:@"" andPassword:self.oldPassword];
     NSURL *newUrl = [oldUrl urlWithUpdatedUsername:self.updatedUser andPassword:self.oldPassword withScheme:kScheme];
     
-    STAssertEqualObjects(newUrl.user, self.updatedUser, nil);
-    STAssertEqualObjects(newUrl.password, self.oldPassword, nil);
+    XCTAssertEqualObjects(newUrl.user, self.updatedUser);
+    XCTAssertEqualObjects(newUrl.password, self.oldPassword);
 }
 
 - (void)testUrlWithUpdatedPasswordOnlyWithNoPreviousPassword
@@ -99,32 +99,32 @@ static NSString *kScheme = @"https";
     NSURL *oldUrl = [self urlWithUser:self.oldUser andPassword:@""];
     NSURL *newUrl = [oldUrl urlWithUpdatedUsername:self.oldUser andPassword:self.updatedPassword withScheme:kScheme];
     
-    STAssertEqualObjects(newUrl.user, self.oldUser, nil);
-    STAssertEqualObjects(newUrl.password, self.updatedPassword, nil);
+    XCTAssertEqualObjects(newUrl.user, self.oldUser);
+    XCTAssertEqualObjects(newUrl.password, self.updatedPassword);
 }
 
 - (void)testUrlWithUpdatedUsernameAndPasswordWithNilUser
 {
     NSURL *newUrl = [self.urlWithOldUserAndOldPassword urlWithUpdatedUsername:nil andPassword:self.updatedPassword withScheme:kScheme];
     
-    STAssertEqualObjects(newUrl.user, @"", nil);
-    STAssertEqualObjects(newUrl.password, self.updatedPassword, nil);
+    XCTAssertEqualObjects(newUrl.user, @"");
+    XCTAssertEqualObjects(newUrl.password, self.updatedPassword);
 }
 
 - (void)testUrlWithUpdatedUsernameAndPasswordWithNilPassword
 {
     NSURL *newUrl = [self.urlWithOldUserAndOldPassword urlWithUpdatedUsername:self.updatedUser andPassword:nil withScheme:kScheme];
     
-    STAssertEqualObjects(newUrl.user, self.updatedUser, nil);
-    STAssertEqualObjects(newUrl.password, @"", nil);
+    XCTAssertEqualObjects(newUrl.user, self.updatedUser);
+    XCTAssertEqualObjects(newUrl.password, @"");
 }
 
 - (void)testUrlWithUpdatedUsername
 {
     NSURL *newUrl = [self.urlWithOldUserAndOldPassword urlWithUpdatedUsername:self.updatedUser withScheme:kScheme];
     
-    STAssertEqualObjects(newUrl.user, self.updatedUser, nil);
-    STAssertEqualObjects(newUrl.password, self.urlWithOldUserAndOldPassword.password, nil);
+    XCTAssertEqualObjects(newUrl.user, self.updatedUser);
+    XCTAssertEqualObjects(newUrl.password, self.urlWithOldUserAndOldPassword.password);
 }
 
 - (void)testUrlWithUpdatedUsernameAndPasswordWithEmptyStrings
@@ -132,7 +132,7 @@ static NSString *kScheme = @"https";
     NSURL *newUrl = [self.urlWithOldUserAndOldPassword urlWithUpdatedUsername:@"" andPassword:@"" withScheme:@"http"];
     NSURL *expectedUrl = [NSURL URLWithString:@"http://www.google.com"];
     
-    STAssertEqualObjects(newUrl, expectedUrl, nil);
+    XCTAssertEqualObjects(newUrl, expectedUrl);
 }
 
 - (void)testUrlWithUpdatedUsernameAndPasswordWithNils
@@ -140,15 +140,15 @@ static NSString *kScheme = @"https";
     NSURL *newUrl = [self.urlWithOldUserAndOldPassword urlWithUpdatedUsername:nil andPassword:nil withScheme:@"http"];
     NSURL *expectedUrl = [NSURL URLWithString:@"http://www.google.com"];
     
-    STAssertEqualObjects(newUrl, expectedUrl, nil);
+    XCTAssertEqualObjects(newUrl, expectedUrl);
 }
 
 - (void)testUrlWithUpdatedPassword
 {
     NSURL *newUrl = [self.urlWithOldUserAndOldPassword urlWithUpdatedPassword:self.updatedPassword withScheme:kScheme];
     
-    STAssertEqualObjects(newUrl.user, self.urlWithOldUserAndOldPassword.user, nil);
-    STAssertEqualObjects(newUrl.password, self.updatedPassword, nil);
+    XCTAssertEqualObjects(newUrl.user, self.urlWithOldUserAndOldPassword.user);
+    XCTAssertEqualObjects(newUrl.password, self.updatedPassword);
 }
 
 - (void)testUrlWithoutAuthentication
@@ -159,15 +159,15 @@ static NSString *kScheme = @"https";
     NSURL *urlWithUserOnly = [self urlWithUser:@"user" andPassword:nil];
     NSURL *urlWithPasswordOnly = [self urlWithUser:nil andPassword:@"password"];
     
-    STAssertEqualObjects(urlWithUserAndPassowrd.urlWithoutAuthentication, expectedUrl, nil);
-    STAssertEqualObjects(urlWithUserOnly.urlWithoutAuthentication, expectedUrl, nil);
-    STAssertEqualObjects(urlWithPasswordOnly.urlWithoutAuthentication, expectedUrl, nil);
+    XCTAssertEqualObjects(urlWithUserAndPassowrd.urlWithoutAuthentication, expectedUrl);
+    XCTAssertEqualObjects(urlWithUserOnly.urlWithoutAuthentication, expectedUrl);
+    XCTAssertEqualObjects(urlWithPasswordOnly.urlWithoutAuthentication, expectedUrl);
 }
 
 - (void)testUrlWithDefaultSchemePrependedUsingSchemeWithExistingScheme
 {
     NSURL *url = [NSURL URLWithString:@"https://www.yahoo.com"];
-    STAssertEquals([url urlWithDefaultSchemePrependedUsingScheme:@"http"], url, @"Objects should be equal, perform no operation if scheme is provided");
+    XCTAssertEqual([url urlWithDefaultSchemePrependedUsingScheme:@"http"], url, @"Objects should be equal, perform no operation if scheme is provided");
 }
 
 - (void)testUrlWithDefaultSchemePrependedUsingSchemeWithoutExistingHttpScheme
@@ -177,7 +177,7 @@ static NSString *kScheme = @"https";
     
     NSURL *actualUrl = [inputUrl urlWithDefaultSchemePrependedUsingScheme:@"http"];
     
-    STAssertEqualObjects(actualUrl, expectedUrl, nil);
+    XCTAssertEqualObjects(actualUrl, expectedUrl);
 }
 
 - (void)testUrlWithDefaultSchemePrependedUsingSchemeWithoutExistingHttpsScheme
@@ -187,7 +187,7 @@ static NSString *kScheme = @"https";
     
     NSURL *actualUrl = [inputUrl urlWithDefaultSchemePrependedUsingScheme:@"https"];
     
-    STAssertEqualObjects(actualUrl, expectedUrl, nil);
+    XCTAssertEqualObjects(actualUrl, expectedUrl);
 }
 
 - (void)testBasicAuthenticationStringWithNoUserOrPassword
@@ -197,8 +197,8 @@ static NSString *kScheme = @"https";
     NSString *authStringWithoutEncoding = [inputUrl basicAuthenticationStringWithoutEncoding];
     NSString *authStringWithEncoding = [inputUrl basicAuthenticationStringWithEncoding];
     
-    STAssertTrue((authStringWithoutEncoding == nil), nil);
-    STAssertTrue((authStringWithEncoding == nil), nil);
+    XCTAssertTrue((authStringWithoutEncoding == nil));
+    XCTAssertTrue((authStringWithEncoding == nil));
 }
 
 - (void)testBasicAuthenticationStringWithEmptyUserAndPassword
@@ -208,8 +208,8 @@ static NSString *kScheme = @"https";
     NSString *authStringWithoutEncoding = [inputUrl basicAuthenticationStringWithoutEncoding];
     NSString *authStringWithEncoding = [inputUrl basicAuthenticationStringWithEncoding];
     
-    STAssertTrue((authStringWithoutEncoding == nil), nil);
-    STAssertTrue((authStringWithEncoding == nil), nil);
+    XCTAssertTrue((authStringWithoutEncoding == nil));
+    XCTAssertTrue((authStringWithEncoding == nil));
 }
 
 - (void)testBasicAuthenticationStringWithEmptyUserAndPopulatedPassword
@@ -220,8 +220,8 @@ static NSString *kScheme = @"https";
     NSString *authStringWithoutEncoding = [inputUrl basicAuthenticationStringWithoutEncoding];
     NSString *authStringWithEncoding = [inputUrl basicAuthenticationStringWithEncoding];
 
-    STAssertEqualObjects(authStringWithoutEncoding, expectedString, nil);
-    STAssertEqualObjects(authStringWithEncoding, expectedString, nil);
+    XCTAssertEqualObjects(authStringWithoutEncoding, expectedString);
+    XCTAssertEqualObjects(authStringWithEncoding, expectedString);
 }
 
 - (void)testBasicAuthenticationStringPopulatedUserAndEmptyPassword
@@ -232,8 +232,8 @@ static NSString *kScheme = @"https";
     NSString *authStringWithoutEncoding = [inputUrl basicAuthenticationStringWithoutEncoding];
     NSString *authStringWithEncoding = [inputUrl basicAuthenticationStringWithEncoding];
     
-    STAssertEqualObjects(authStringWithoutEncoding, expectedString, nil);
-    STAssertEqualObjects(authStringWithEncoding, expectedString, nil);
+    XCTAssertEqualObjects(authStringWithoutEncoding, expectedString);
+    XCTAssertEqualObjects(authStringWithEncoding, expectedString);
 }
 
 - (void)testBasicAuthenticationStringPopulatedUsernameAndPassword
@@ -244,8 +244,8 @@ static NSString *kScheme = @"https";
     NSString *authStringWithoutEncoding = [inputUrl basicAuthenticationStringWithoutEncoding];
     NSString *authStringWithEncoding = [inputUrl basicAuthenticationStringWithEncoding];
     
-    STAssertEqualObjects(authStringWithoutEncoding, expectedString, nil);
-    STAssertEqualObjects(authStringWithEncoding, expectedString, nil);
+    XCTAssertEqualObjects(authStringWithoutEncoding, expectedString);
+    XCTAssertEqualObjects(authStringWithEncoding, expectedString);
 }
 
 - (void)testBasicAuthenticationStringNonEncodedUsernameAndPassword
@@ -258,8 +258,8 @@ static NSString *kScheme = @"https";
     NSString *authStringWithoutEncoding = [inputUrl basicAuthenticationStringWithoutEncoding];
     NSString *authStringWithEncoding = [inputUrl basicAuthenticationStringWithEncoding];
     
-    STAssertEqualObjects(authStringWithoutEncoding, expectedNonEncodedString, nil);
-    STAssertEqualObjects(authStringWithEncoding, expectedEncodedString, nil);
+    XCTAssertEqualObjects(authStringWithoutEncoding, expectedNonEncodedString);
+    XCTAssertEqualObjects(authStringWithEncoding, expectedEncodedString);
 }
 
 #pragma mark - Test helpers

@@ -34,10 +34,19 @@ static NSString *kIllegalCharacterSet = @"!*'();:@&=+@,/?#[]";
 
 - (NSString *)basicAuthStringWithUser:(NSString *)user andPassword:(NSString *)password shouldEncode:(BOOL)shouldEncode
 {
-    NSString *userToInsert = (shouldEncode) ? user.urlSafeString : user;
-    NSString *passwordToInsert = (shouldEncode) ? password.urlSafeString : password;
+    //    NSString *userToInsert = (shouldEncode) ? user.urlSafeString : user;
+    //    NSString *passwordToInsert = (shouldEncode) ? password.urlSafeString : password;
+    user = shouldEncode ? [user stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLUserAllowedCharacterSet]] : user;
+    password = shouldEncode ? [password stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPasswordAllowedCharacterSet]] : password;
     
-    return [NSString stringWithFormat:@"%@:%@@", (userToInsert) ? userToInsert : @"", (passwordToInsert) ? passwordToInsert : @""];
+    if (user.length > 0) {
+        NSMutableString *authString = [[NSMutableString alloc] initWithString:user];
+        NSString *safePassword = password.length > 0 ? password : @"";
+        [authString appendFormat:@":%@", safePassword];
+        [authString appendString:@"@"];
+        return authString;
+    }
+    return (password.length > 0) ? [NSString stringWithFormat:@":%@@", password] : @"";
 }
 
 - (NSString *)illegalCharacterSet

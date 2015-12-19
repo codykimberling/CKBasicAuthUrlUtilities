@@ -11,7 +11,6 @@
 		43F929B91769389F00ED15E2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43F929B81769389F00ED15E2 /* Foundation.framework */; };
 		43F929BE1769389F00ED15E2 /* CKBasicAuthUrlUtilities.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43F929BD1769389F00ED15E2 /* CKBasicAuthUrlUtilities.h */; };
 		43F929C01769389F00ED15E2 /* CKBasicAuthUrlUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 43F929BF1769389F00ED15E2 /* CKBasicAuthUrlUtilities.m */; };
-		43F929C81769389F00ED15E2 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43F929C71769389F00ED15E2 /* SenTestingKit.framework */; };
 		43F929CA1769389F00ED15E2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43F929C91769389F00ED15E2 /* UIKit.framework */; };
 		43F929CB1769389F00ED15E2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43F929B81769389F00ED15E2 /* Foundation.framework */; };
 		43F929CE1769389F00ED15E2 /* libCKBasicAuthUrlUtilities.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43F929B51769389F00ED15E2 /* libCKBasicAuthUrlUtilities.a */; };
@@ -57,8 +56,7 @@
 		43F929BC1769389F00ED15E2 /* CKBasicAuthUrlUtilities-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CKBasicAuthUrlUtilities-Prefix.pch"; sourceTree = "<group>"; };
 		43F929BD1769389F00ED15E2 /* CKBasicAuthUrlUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKBasicAuthUrlUtilities.h; sourceTree = "<group>"; };
 		43F929BF1769389F00ED15E2 /* CKBasicAuthUrlUtilities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CKBasicAuthUrlUtilities.m; sourceTree = "<group>"; };
-		43F929C61769389F00ED15E2 /* CKBasicAuthUrlUtilitiesTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CKBasicAuthUrlUtilitiesTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		43F929C71769389F00ED15E2 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		43F929C61769389F00ED15E2 /* CKBasicAuthUrlUtilitiesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CKBasicAuthUrlUtilitiesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43F929C91769389F00ED15E2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		43F929D11769389F00ED15E2 /* CKBasicAuthUrlUtilitiesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CKBasicAuthUrlUtilitiesTests-Info.plist"; sourceTree = "<group>"; };
 		43F929D31769389F00ED15E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -94,7 +92,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43F929C81769389F00ED15E2 /* SenTestingKit.framework in Frameworks */,
 				43F929CA1769389F00ED15E2 /* UIKit.framework in Frameworks */,
 				43F929CB1769389F00ED15E2 /* Foundation.framework in Frameworks */,
 				43F929CE1769389F00ED15E2 /* libCKBasicAuthUrlUtilities.a in Frameworks */,
@@ -131,7 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				43F929B51769389F00ED15E2 /* libCKBasicAuthUrlUtilities.a */,
-				43F929C61769389F00ED15E2 /* CKBasicAuthUrlUtilitiesTests.octest */,
+				43F929C61769389F00ED15E2 /* CKBasicAuthUrlUtilitiesTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -141,7 +138,6 @@
 			children = (
 				4368313B1A21213100C3DCBD /* XCTest.framework */,
 				43F929B81769389F00ED15E2 /* Foundation.framework */,
-				43F929C71769389F00ED15E2 /* SenTestingKit.framework */,
 				43F929C91769389F00ED15E2 /* UIKit.framework */,
 				E512CB20A5844E17B47AC11B /* libPods-CKBasicAuthUrlUtilitiesTests.a */,
 				395E7F4A30AC46698DE0AD83 /* libPods.a */,
@@ -241,7 +237,6 @@
 				43F929C11769389F00ED15E2 /* Sources */,
 				43F929C21769389F00ED15E2 /* Frameworks */,
 				43F929C31769389F00ED15E2 /* Resources */,
-				43F929C41769389F00ED15E2 /* ShellScript */,
 				51FCB936194541CC85FD4718 /* Copy Pods Resources */,
 			);
 			buildRules = (
@@ -251,7 +246,7 @@
 			);
 			name = CKBasicAuthUrlUtilitiesTests;
 			productName = CKBasicAuthUrlUtilitiesTests;
-			productReference = 43F929C61769389F00ED15E2 /* CKBasicAuthUrlUtilitiesTests.octest */;
+			productReference = 43F929C61769389F00ED15E2 /* CKBasicAuthUrlUtilitiesTests.xctest */;
 			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 /* End PBXNativeTarget section */
@@ -260,7 +255,8 @@
 		43F929AD1769389F00ED15E2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastTestingUpgradeCheck = 0720;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Cody Kimberling";
 			};
 			buildConfigurationList = 43F929B01769389F00ED15E2 /* Build configuration list for PBXProject "CKBasicAuthUrlUtilities" */;
@@ -320,19 +316,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sanbox is not in sync with the Podfile.lock. Run 'pod install'.\nEOM\n    exit 1\nfi\n";
-		};
-		43F929C41769389F00ED15E2 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
 		51FCB936194541CC85FD4718 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -422,6 +405,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -504,8 +488,9 @@
 				);
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_LIBTOOLFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codykimberling.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
+				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
 		};
@@ -525,8 +510,9 @@
 				);
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_LIBTOOLFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codykimberling.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
+				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};
