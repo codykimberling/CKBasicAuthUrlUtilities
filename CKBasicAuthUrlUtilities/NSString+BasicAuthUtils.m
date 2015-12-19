@@ -34,8 +34,6 @@ static NSString *kIllegalCharacterSet = @"!*'();:@&=+@,/?#[]";
 
 - (NSString *)basicAuthStringWithUser:(NSString *)user andPassword:(NSString *)password shouldEncode:(BOOL)shouldEncode
 {
-    //    NSString *userToInsert = (shouldEncode) ? user.urlSafeString : user;
-    //    NSString *passwordToInsert = (shouldEncode) ? password.urlSafeString : password;
     user = shouldEncode ? [user stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLUserAllowedCharacterSet]] : user;
     password = shouldEncode ? [password stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPasswordAllowedCharacterSet]] : password;
     
