@@ -2,7 +2,7 @@
 
 ###  Let's face it, dealing with BASIC authentication using NSURLs is a pain in the ass, this utility makes it slightly less painful.
 
-Install via Cocoapods, add a line, like the one below, in your Podfile:
+Install via CocoaPods, add a line, like the one below, in your Podfile:
 
 `pod 'CKBasicAuthUrlUtilities',	'~> 0.0.6'`
 
